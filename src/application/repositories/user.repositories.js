@@ -89,14 +89,14 @@ const addUser = (params, callback) => {
         callback({ message: "Username đã tồn tại" }, null);
       } else {
         connection.query(
-          "insert into users (username,email,password,first_name,last_name,role,avatar,created_at,updated_at,created_by_id,updated_by_id,api_key,status,address_user,phone_number) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+          "insert into users (username,email,password,first_name,last_name,role_id,avatar,created_at,updated_at,created_by_id,updated_by_id,api_key,status,address_user,phone_number) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
           [
             params.username,
             params.email,
             hashedPassword,
             params.first_name,
             params.last_name,
-            params.role,
+            params.role_id,
             params.avatar,
             new Date().toString(),
             new Date().toString(),
