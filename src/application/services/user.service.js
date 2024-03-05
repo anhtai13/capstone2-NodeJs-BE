@@ -34,7 +34,7 @@ const addUser = (params, callback) => {
     callback({ message: "Invalid password!" }, null);
   } else if (!validateUserName(params.username)) {
     callback({ message: "Invalid username!" }, null);
-  } else if (!validateRoleUser(params.role)) {
+  } else if (!validateRoleUser(params.role_id)) {
     callback({ message: "Invalid role!" }, null);
   } else {
     userRepositories.addUser(params, (err, result) => {
