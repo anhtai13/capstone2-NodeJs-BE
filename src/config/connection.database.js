@@ -6,7 +6,7 @@ const getConnection = () => {
     port: 3306,
     user: "root",
     password: "password",
-    database: "laundry_booking",
+    database: "clean_house",
   });
 };
 
