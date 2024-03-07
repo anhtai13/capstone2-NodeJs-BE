@@ -18,7 +18,7 @@ const adminUser = {
     first_name: "",
     last_name: "",
     password: encryptPassword("Password123@"),
-    role_id:    1,
+    role_id: 1,
     avatar: "",
     status: "1",
     address_user: "DN",
