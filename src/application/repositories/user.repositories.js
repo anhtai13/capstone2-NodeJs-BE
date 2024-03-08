@@ -96,7 +96,7 @@ const addUser = (params, callback) => {
             hashedPassword,
             params.first_name,
             params.last_name,
-            params.role_id,
+            params.role,
             params.avatar,
             new Date().toString(),
             new Date().toString(),
