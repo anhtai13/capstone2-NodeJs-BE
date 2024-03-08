@@ -13,12 +13,12 @@ const comparePassword = (value, encryptValue) => {
   return bcrypt.compareSync(value, encryptValue);
 };
 const adminUser = {
-    username: "admin",
-    email: "admin1@mail.com",
+    username: "user3",
+    email: "User3@mail.com",
     first_name: "",
     last_name: "",
     password: encryptPassword("Password123@"),
-    role_id:    1,
+    role_id:    3,
     avatar: "",
     status: "1",
     address_user: "DN",

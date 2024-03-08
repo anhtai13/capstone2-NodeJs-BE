@@ -237,6 +237,7 @@ const deleteUser = (params, callback) => {
   );
 };
 
+
 export default {
   searchUsers,
   addUser,

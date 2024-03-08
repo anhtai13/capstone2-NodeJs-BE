@@ -83,7 +83,8 @@ const deleteUser = (params, callback) => {
       if (err) {
         callback(err, null);
       } else {
-        callback(null, result);
+        callback(null, result,{ message: "Delete User success" });
+        
       }
     });
   }
