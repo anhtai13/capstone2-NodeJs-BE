@@ -8,9 +8,9 @@ const login = (params, callback) => {
     callback({message: "Bạn hãy nhập đầy đủ thông tin để đăng nhập"}, null);
     return;
   }
-  if (params.role_id == 1) {
+  if (params.role == 1) {
     connection.query(
-      "SELECT users.user_id,users.username,users.password,user_roles.role_id FROM users INNER JOIN user_roles ON users.role_id = user_roles.role_id;",
+      "SELECT * FROM users WHERE username = ? and role=1",
       [params.username],
       (error, results) => {
         if (error) {
@@ -49,7 +49,7 @@ const login = (params, callback) => {
       }
     );
   }
-  if (params.role_id == 2) {
+  if (params.role == 2) {
     connection.query(
       "SELECT * FROM users WHERE username = ?",
       [params.username],
@@ -90,7 +90,7 @@ const login = (params, callback) => {
       }
     );
   }
-  if (params.role_id == 3) {
+  if (params.role == 3) {
     connection.query(
       "SELECT * FROM users WHERE username = ?",
       [params.username],
