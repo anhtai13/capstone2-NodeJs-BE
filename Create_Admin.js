@@ -4,7 +4,6 @@ const connection = getConnection();
 
 const SALT_ROUNDS = 10;
 
-export { SALT_ROUNDS };
 const encryptPassword = (value) => {
   return bcrypt.hashSync(value, SALT_ROUNDS);
 };
@@ -13,12 +12,12 @@ const comparePassword = (value, encryptValue) => {
   return bcrypt.compareSync(value, encryptValue);
 };
 const adminUser = {
-    username: "admin",
-    email: "admin1@mail.com",
+    username: "user4",
+    email: "User3@mail.com",
     first_name: "",
     last_name: "",
     password: encryptPassword("Password123@"),
-    role_id: 1,
+    role:    3,
     avatar: "",
     status: "1",
     address_user: "DN",

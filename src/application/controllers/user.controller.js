@@ -26,7 +26,7 @@ const addUser = (req, res) => {
                 error: err.message
             });
         } else {
-            res.status(201).send("Success");
+            res.status(201).send({ message: "Add Accout Succesfull!!" });
         }
     })
 }

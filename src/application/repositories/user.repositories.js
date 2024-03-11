@@ -100,8 +100,8 @@ const addUser = (params, callback) => {
             params.avatar,
             new Date().toISOString().slice(0, 19).replace('T', ' '),
             new Date().toString(),
-            Number(params.created_by_id),
-            Number(params.updated_by_id),
+            params.created_by_id,
+            params.updated_by_id,
             null,
             params.status,
             params.address_user,
@@ -112,7 +112,7 @@ const addUser = (params, callback) => {
               console.log(err);
               callback({ message: "Something went wrong!" }, null);
             } else {
-              callback(null, results);
+              callback(null, results,{ message: "Succesfull!!!!!!" });
             }
           }
         );
@@ -236,6 +236,7 @@ const deleteUser = (params, callback) => {
     }
   );
 };
+
 
 export default {
   searchUsers,
