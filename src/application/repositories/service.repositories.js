@@ -3,7 +3,7 @@ import getConnection from "../../config/connection.database.js";
 const connection = getConnection();
 let limitDefault = 5;
 let offsetDefault = 0;
-const getListProducts = (params, callback) => {
+const getListServices = (params, callback) => {
   if (params.limit && params.offset) {
     limitDefault = params.limit;
     offsetDefault = params.offset;
@@ -29,7 +29,7 @@ const getListProducts = (params, callback) => {
 };
 
 const getCategory = (params, callback) => {
-  connection.query(`SELECT * FROM category`, (error, results) => {
+  connection.query(`SELECT * FROM service_category`, (error, results) => {
     if (error) {
       callback({ message: "Something wrong!" }, null);
     } else {
@@ -38,9 +38,12 @@ const getCategory = (params, callback) => {
   });
 };
 
-const getProductByCategory = (params, callback) => {
+const getServiceByCategory = (params, callback) => {
   connection.query(
-    `SELECT * FROM services where category="${params.category}"`,
+    `SELECT services.* FROM services 
+    JOIN service_category ON services.category_id = service_category.category_id 
+    WHERE service_category.category_name = ?`,
+    [params.service_category],
     (error, results) => {
       if (error) {
         callback({ message: "Something wrong!" }, null);
@@ -51,7 +54,7 @@ const getProductByCategory = (params, callback) => {
   );
 };
 
-const addProduct = (params, callback) => {
+const addService = (params, callback) => {
   connection.query(
     "insert into services (description,name_service,unit_price,image,category_id,created_at,created_by_id,updated_at,updated_by_id) values (?,?,?,?,?,?,?,?,?)",
     [
@@ -59,7 +62,7 @@ const addProduct = (params, callback) => {
       params.name,
       params.price,
       params.image,
-      1,
+      params.category_id,
       params.created_at,
       params.created_by_id,
       params.updated_at,
@@ -76,10 +79,10 @@ const addProduct = (params, callback) => {
   );
 };
 
-const getDetailProduct = (params, callback) => {
+const getDetailService = (params, callback) => {
   connection.query(
-    `SELECT * FROM services WHERE id=?`,
-    [params.id],
+    `SELECT * FROM services WHERE services_id=?`,
+    [params.services_id],
     (error, results, fields) => {
       if (error) {
         callback({ message: "Something wrong!" }, null);
@@ -92,11 +95,11 @@ const getDetailProduct = (params, callback) => {
   );
 };
 
-const updateProduct = (params, callback) => {
+const updateService = (params, callback) => {
   console.log(params);
   connection.query(
-    `SELECT * FROM laundry_booking.services WHERE service_id=?`,
-    [params.id],
+    `SELECT * FROM services WHERE service_id=?`,
+    [params.service_id],
     (error, results, fields) => {
       if (error) {
         callback({ message: "Something wrong!" }, null);
@@ -110,12 +113,12 @@ const updateProduct = (params, callback) => {
             params.name,
             params.price,
             params.image,
-            1,
+            params.category_id,
             params.created_at,
             params.created_by_id,
             params.updated_at,
             params.updated_by_id,
-            params.id,
+            params.service_id,
           ],
           (err, results) => {
             if (err) {
@@ -131,10 +134,10 @@ const updateProduct = (params, callback) => {
   );
 };
 
-const deleteProduct = (params, callback) => {
+const deleteService = (params, callback) => {
   connection.query(
     `SELECT * FROM services WHERE service_id=?`,
-    [params.id],
+    [params.service_id],
     (error, results, fields) => {
       if (error) {
         callback({ message: "Something wrong!" }, null);
@@ -143,7 +146,7 @@ const deleteProduct = (params, callback) => {
       } else {
         connection.query(
           "delete from services where service_id=?",
-          [params.id],
+          [params.service_id],
           (err, results) => {
             if (err) {
               callback({ message: "Something wrong!" }, null);
@@ -158,11 +161,11 @@ const deleteProduct = (params, callback) => {
 };
 
 export default {
-  getListProducts,
+  getListServices,
   getCategory,
-  getProductByCategory,
-  addProduct,
-  getDetailProduct,
-  updateProduct,
-  deleteProduct,
+  getServiceByCategory,
+  addService,
+  getDetailService,
+  updateService,
+  deleteService,
 };

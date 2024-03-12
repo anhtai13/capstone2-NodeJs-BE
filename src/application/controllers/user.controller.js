@@ -71,7 +71,7 @@ const deleteUser = (req, res) => {
                 error: err.message
             });
         } else {
-            res.status(204).send("Success");
+            res.status(204).send({ message: "Delete User Succesfull!!" });
         }
     })
 }
