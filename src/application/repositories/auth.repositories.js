@@ -36,7 +36,7 @@ const login = (params, callback) => {
                     callback({ message: "Something went wrong!" }, null);
                     return;
                   }
-                  callback(null, { key: key });
+                  callback(null, { key: key, id: results[0].user_id});
                 }
               );
             }
