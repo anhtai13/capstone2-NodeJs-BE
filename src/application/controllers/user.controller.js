@@ -72,7 +72,6 @@ const updateUser = (req, res) => {
 const deleteUser = (req, res) => {
   const { id } = req.params;
 
-<<<<<<< HEAD
   userService.deleteUser({ id }, (err, result) => {
     if (err) {
       res.status(500).send({
@@ -83,18 +82,6 @@ const deleteUser = (req, res) => {
     }
   });
 };
-=======
-    userService.deleteUser({ id }, (err, result) => {
-        if (err) {
-            res.status(500).send({
-                error: err.message
-            });
-        } else {
-            res.status(204).send({ message: "Delete User Succesfull!!" });
-        }
-    })
-}
->>>>>>> cfe03861385e1bde58d839d3045e444718a1b34f
 
 export default {
   searchUsers,

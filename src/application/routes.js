@@ -16,13 +16,8 @@ router.post("/logout", authController.logout);
 router.get("/users", userController.searchUsers);
 router.post("/users", userController.addUser);
 router.get("/users/:id", userController.getDetailUser);
-<<<<<<< HEAD
 router.put("/users/:id", userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
-=======
-router.put("/users/update/:id", userController.updateUser);
-router.delete("/users/delete/:id", userController.deleteUser);
->>>>>>> cfe03861385e1bde58d839d3045e444718a1b34f
 
 // Product management
 router.get("/category", serviceController.getCategory);
