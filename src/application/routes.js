@@ -1,6 +1,6 @@
 import { Router } from "express";
 import userController from "./controllers/user.controller.js";
-import productController from "./controllers/product.controller.js";
+import serviceController from "./controllers/service.controller.js";
 import authController from "./controllers/auth.controller.js";
 import orderController from "./controllers/order.controller.js";
 import orderDetailController from "./controllers/orderDetail.controller.js";
@@ -16,17 +16,22 @@ router.post("/logout", authController.logout);
 router.get("/users", userController.searchUsers);
 router.post("/users", userController.addUser);
 router.get("/users/:id", userController.getDetailUser);
+<<<<<<< HEAD
 router.put("/users/:id", userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
+=======
+router.put("/users/update/:id", userController.updateUser);
+router.delete("/users/delete/:id", userController.deleteUser);
+>>>>>>> cfe03861385e1bde58d839d3045e444718a1b34f
 
 // Product management
-router.get("/category", productController.getCategory);
-router.get("/category/:category", productController.getProductByCategory);
-router.get("/product", productController.getListProducts);
-router.post("/product", productController.addProduct);
-router.get("/product/:id", productController.getDetailProduct);
-router.put("/product", productController.updateProduct);
-router.delete("/product/:id", productController.deleteProduct);
+router.get("/category", serviceController.getCategory);
+router.get("/category/:category", serviceController.getServiceByCategory);
+router.get("/services", serviceController.getListServices);
+router.post("/services", serviceController.addService);
+router.get("/services/:id", serviceController.getDetailService);
+router.put("/services", serviceController.updateService);
+router.delete("/services/:id", serviceController.deleteService);
 
 // Order management
 router.get("/order", orderController.getListOrder);

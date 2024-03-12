@@ -137,13 +137,19 @@ const getDetailUser = (params, callback) => {
 };
 
 const updateUser = (params, callback) => {
+<<<<<<< HEAD
+=======
+  // Truy vấn để kiểm tra xem người dùng với ID cụ thể có tồn tại không
+>>>>>>> cfe03861385e1bde58d839d3045e444718a1b34f
   connection.query(
     `SELECT * FROM users WHERE user_id=?`,
     [params.id],
     (error, results, fields) => {
+      // Xử lý kết quả truy vấn và lỗi
       if (error) {
-        callback({ message: "Something wrong!" }, null);
+        callback({ message: "Có lỗi xảy ra!" }, null);
       } else if (results.length == 0) {
+<<<<<<< HEAD
         callback({ message: "User not found" }, null);
       } else {
         connection.query(
@@ -161,11 +167,28 @@ const updateUser = (params, callback) => {
             params.userUpdate.updated_at,
             params.userUpdate.created_by_id,
             params.userUpdate.updated_by_id,
+=======
+        callback({ message: "Không tìm thấy người dùng" }, null);
+      } else {
+        // Cập nhật thông tin người dùng trong cơ sở dữ liệu
+        connection.query(
+          "UPDATE users SET first_name=?, last_name=?, role=?, avatar=?, created_at=?, updated_at=?, created_by_id=?, updated_by_id=? WHERE user_id=?",
+          [
+            params.first_name,
+            params.last_name,
+            params.role,
+            params.avatar,
+            params.created_at,
+            params.updated_at,
+            params.created_by_id,
+            params.updated_by_id,
+>>>>>>> cfe03861385e1bde58d839d3045e444718a1b34f
             params.id,
           ],
           (err, results) => {
+            // Xử lý lỗi của truy vấn cập nhật
             if (err) {
-              callback({ message: "Something wrong!" }, null);
+              callback({ message: "Có lỗi xảy ra!" }, null);
             } else {
               callback(null, results);
             }
@@ -199,7 +222,7 @@ const deleteUser = (params, callback) => {
                 null
               );
             } else {
-              callback(null, results);
+              callback(null, results, { message: "delete user success" });
             }
           }
         );
