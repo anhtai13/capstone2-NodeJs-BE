@@ -2,10 +2,10 @@ import {
   validateIdDetailAndDelete,
   validatePrice,
 } from "../../utils/validationProduct.js";
-import productRepositories from "../repositories/product.repositories.js";
+import serviceRepositories from "../repositories/service.repositories.js";
 
-const getListProducts = (params, callback) => {
-  productRepositories.getListProducts(params, (err, result) => {
+const getListSerices = (params, callback) => {
+  serviceRepositories.getListSerices(params, (err, result) => {
     if (err) {
       callback(err, null);
     } else {
@@ -14,8 +14,8 @@ const getListProducts = (params, callback) => {
   });
 };
 
-const getProductByCategory = (params, callback) => {
-  productRepositories.getProductByCategory(params, (err, result) => {
+const getSericeByCategory = (params, callback) => {
+  serviceRepositories.getSericeByCategory(params, (err, result) => {
     if (err) {
       callback(err, null);
     } else {
@@ -24,7 +24,7 @@ const getProductByCategory = (params, callback) => {
   });
 };
 const getCategory = (params, callback) => {
-  productRepositories.getCategory(params, (err, result) => {
+  serviceRepositories.getCategory(params, (err, result) => {
     if (err) {
       callback(err, null);
     } else {
@@ -33,7 +33,7 @@ const getCategory = (params, callback) => {
   });
 };
 // hàm add dịch vụ
-const addProduct = (params, callback) => {
+const addSerice = (params, callback) => {
     if (!params.name && !params.price) {
         callback({ message: "Please complete all information" }, null);
       }
@@ -47,7 +47,7 @@ const addProduct = (params, callback) => {
         message:"Error: Amount cannot be negative. Please enter a valid amount",
       },null);
   }else{
-    productRepositories.addProduct(params, (err, result) => {
+    serviceRepositories.addSerice(params, (err, result) => {
       if (err) {
         callback(err, null);
       } else {
@@ -57,11 +57,11 @@ const addProduct = (params, callback) => {
   }
 };
 
-const getDetailProduct = (params, callback) => {
+const getDetailSerice = (params, callback) => {
   if (!validateIdDetailAndDelete(params.id)) {
     callback({ message: "Invalid id" }, null);
   } else {
-    productRepositories.getDetailProduct(params, (err, result) => {
+    serviceRepositories.getDetailSerice(params, (err, result) => {
       if (err) {
         callback(err, null);
       } else {
@@ -71,7 +71,7 @@ const getDetailProduct = (params, callback) => {
   }
 };
 
-const updateProduct = (params, callback) => {
+const updateSerice = (params, callback) => {
   if (
     !params.name &&
     !params.sku &&
@@ -83,7 +83,7 @@ const updateProduct = (params, callback) => {
   } else if (!validatePrice(params.price)) {
     callback({ message: "Invalid price" }, null);
   } else {
-    productRepositories.updateProduct(params, (err, result) => {
+    serviceRepositories.updateSerice(params, (err, result) => {
       if (err) {
         callback(err, null);
       } else {
@@ -93,11 +93,11 @@ const updateProduct = (params, callback) => {
   }
 };
 
-const deleteProduct = (params, callback) => {
+const deleteSerice = (params, callback) => {
   if (!validateIdDetailAndDelete(params.id)) {
     callback({ message: "Invalid id" }, null);
   } else {
-    productRepositories.deleteProduct(params, (err, result) => {
+    serviceRepositories.deleteSerice(params, (err, result) => {
       if (err) {
         callback(err, null);
       } else {
@@ -108,11 +108,11 @@ const deleteProduct = (params, callback) => {
 };
 
 export default {
-  getListProducts,
+  getListSerices,
   getCategory,
-  getProductByCategory,
-  addProduct,
-  getDetailProduct,
-  updateProduct,
-  deleteProduct,
+  getSericeByCategory,
+  addSerice,
+  getDetailSerice,
+  updateSerice,
+  deleteSerice,
 };

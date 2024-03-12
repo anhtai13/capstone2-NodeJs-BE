@@ -1,9 +1,9 @@
-import productService from "../services/product.service.js";
+import Service from "../services/service.service.js";
 
-const getListProducts = (req, res) => {
+const getListServices = (req, res) => {
     const limit = req.query.limit;
     const offset = req.query.offset;
-    productService.getListProducts({ limit, offset }, (err, result) => {
+    Service.getListServices({ limit, offset }, (err, result) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
@@ -15,7 +15,7 @@ const getListProducts = (req, res) => {
 }
 
 const getCategory = (req, res) => {
-    productService.getCategory("", (err, result) => {
+    Service.getCategory("", (err, result) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
@@ -26,9 +26,9 @@ const getCategory = (req, res) => {
     })
 }
 
-const getProductByCategory = (req, res) => {
+const getServiceByCategory = (req, res) => {
     const category = req.params
-    productService.getProductByCategory(category, (err, result) => {
+    Service.getServiceByCategory(category, (err, result) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
@@ -38,22 +38,22 @@ const getProductByCategory = (req, res) => {
         }
     })
 }
-const addProduct = (req, res) => {
-    const newProduct = req.body
-    productService.addProduct(newProduct, (err, product) => {
+const addService = (req, res) => {
+    const newService = req.body
+    Service.addService(newService, (err, service) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
             });
         } else {
-            res.status(200).send(product);
+            res.status(200).send(service);
         }
     })
 }
 
-const getDetailProduct = (req, res) => {
+const getDetailService = (req, res) => {
     const { id } = req.params;
-    productService.getDetailProduct({ id }, (err, result) => {
+    Service.getDetailService({ id }, (err, result) => {
         if (err) {
             res.status(500).send({
                 error: err.message
@@ -64,10 +64,10 @@ const getDetailProduct = (req, res) => {
     })
 }
 
-const updateProduct = (req, res) => {
-    const productUpdate = req.body
+const updateService = (req, res) => {
+    const serviceUpdate = req.body
 
-    productService.updateProduct(productUpdate, (err, result) => {
+    Service.updateService(serviceUpdate, (err, result) => {
         if (err) {
             console.log(err)
             res.status(500).send({
@@ -80,10 +80,10 @@ const updateProduct = (req, res) => {
     })
 }
 
-const deleteProduct = (req, res) => {
+const deleteService = (req, res) => {
     const { id } = req.params;
 
-    productService.deleteProduct({ id }, (err, result) => {
+    Service.deleteService({ id }, (err, result) => {
         if (err) {
             res.status(500).send({
                 error: err.message
@@ -95,11 +95,11 @@ const deleteProduct = (req, res) => {
 }
 
 export default {
-    getListProducts,
+    getListServices,
     getCategory,
-    getProductByCategory,
-    addProduct,
-    getDetailProduct,
-    updateProduct,
-    deleteProduct
+    getServiceByCategory,
+    addService,
+    getDetailService,
+    updateService,
+    deleteService
 }
