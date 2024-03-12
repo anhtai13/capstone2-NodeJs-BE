@@ -25,58 +25,58 @@ const searchUsers = (params, callback) => {
         }
       );
     }
-  // } else if (params.sortName) {
-  //     connection.query(
-  //       `SELECT * FROM users order by username ${params.sortName} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
-  //       (error, results) => {
-  //         if (error) {
-  //           callback({ message: "Something wrong!" }, null);
-  //         } else if (results.length == 0) {
-  //           callback({ message: "User not found" }, null);
-  //         } else {
-  //           callback(null, results);
-  //         }
-  //       }
-  //     );
-  //   } else if (params.sortRole) {
-  //     connection.query(
-  //       `SELECT * FROM users order by role ${params.sortRole} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
-  //       (error, results) => {
-  //         if (error) {
-  //           callback({ message: "Something wrong!" }, null);
-  //         } else if (results.length == 0) {
-  //           callback({ message: "User not found" }, null);
-  //         } else {
-  //           callback(null, results);
-  //         }
-  //       }
-  //     );
-  //   } else if (params.sortLastName) {
-      // connection.query(
-      //   `SELECT * FROM users order by role ${params.sortLastName} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
-      //   (error, results) => {
-      //     if (error) {
-      //       callback({ message: "Something wrong!" }, null);
-      //     } else if (results.length == 0) {
-      //       callback({ message: "User not found" }, null);
-      //     } else {
-      //       callback(null, results);
-      //     }
-      //   }
-      // );
-    } else {
-      connection.query(`SELECT * FROM users`, (error, results) => {
-        if (error) {
-          callback({ message: "Something wrong1!" }, null);
-        } else {
-          callback(null, results);
-        }
-      });
-    }
+    // } else if (params.sortName) {
+    //     connection.query(
+    //       `SELECT * FROM users order by username ${params.sortName} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
+    //       (error, results) => {
+    //         if (error) {
+    //           callback({ message: "Something wrong!" }, null);
+    //         } else if (results.length == 0) {
+    //           callback({ message: "User not found" }, null);
+    //         } else {
+    //           callback(null, results);
+    //         }
+    //       }
+    //     );
+    //   } else if (params.sortRole) {
+    //     connection.query(
+    //       `SELECT * FROM users order by role ${params.sortRole} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
+    //       (error, results) => {
+    //         if (error) {
+    //           callback({ message: "Something wrong!" }, null);
+    //         } else if (results.length == 0) {
+    //           callback({ message: "User not found" }, null);
+    //         } else {
+    //           callback(null, results);
+    //         }
+    //       }
+    //     );
+    //   } else if (params.sortLastName) {
+    // connection.query(
+    //   `SELECT * FROM users order by role ${params.sortLastName} LIMIT ${limitDefault} OFFSET ${offsetDefault}`,
+    //   (error, results) => {
+    //     if (error) {
+    //       callback({ message: "Something wrong!" }, null);
+    //     } else if (results.length == 0) {
+    //       callback({ message: "User not found" }, null);
+    //     } else {
+    //       callback(null, results);
+    //     }
+    //   }
+    // );
+  } else {
+    connection.query(`SELECT * FROM users`, (error, results) => {
+      if (error) {
+        callback({ message: "Something wrong1!" }, null);
+      } else {
+        callback(null, results);
+      }
+    });
   }
-
+};
 
 const addUser = (params, callback) => {
+  console.log(params);
   const hashedPassword = bcrypt.hashSync(params.password, salt);
   connection.query(
     "SELECT * FROM users WHERE username = ?",
@@ -98,7 +98,7 @@ const addUser = (params, callback) => {
             params.last_name,
             params.role,
             params.avatar,
-            new Date().toISOString().slice(0, 19).replace('T', ' '),
+            new Date().toISOString().slice(0, 19).replace("T", " "),
             new Date().toString(),
             params.created_by_id,
             params.updated_by_id,
@@ -109,10 +109,9 @@ const addUser = (params, callback) => {
           ],
           (err, results) => {
             if (err) {
-              console.log(err);
               callback({ message: "Something went wrong!" }, null);
             } else {
-              callback(null, results,{ message: "Succesfull!!!!!!" });
+              callback(null, results, { message: "Succesfull!!!!!!" });
             }
           }
         );
@@ -138,7 +137,6 @@ const getDetailUser = (params, callback) => {
 };
 
 const updateUser = (params, callback) => {
-  const hashedPassword = bcrypt.hashSync(params.password, salt);
   connection.query(
     `SELECT * FROM users WHERE user_id=?`,
     [params.id],
@@ -147,49 +145,22 @@ const updateUser = (params, callback) => {
         callback({ message: "Something wrong!" }, null);
       } else if (results.length == 0) {
         callback({ message: "User not found" }, null);
-      } else if (params.password.length < 1) {
+      } else {
         connection.query(
           "update users set username=?,email=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
           [
-            params.username,
-            params.email,
-            params.first_name,
-            params.last_name,
-            params.role,
-            params.avatar,
-            params.address_user,
-            params.phone_number,
-            params.created_at,
-            params.updated_at,
-            params.created_by_id,
-            params.updated_by_id,
-            params.id,
-          ],
-          (err, results) => {
-            if (err) {
-              callback({ message: "Something wrong!" }, null);
-            } else {
-              callback(null, results);
-            }
-          }
-        );
-      } else {
-        connection.query(
-          "update users set username=?,email=?,password=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
-          [
-            params.username,
-            params.email,
-            hashedPassword,
-            params.first_name,
-            params.last_name,
-            params.role,
-            params.avatar,
-            params.address_user,
-            params.phone_number,
-            params.created_at,
-            params.updated_at,
-            params.created_by_id,
-            params.updated_by_id,
+            params.userUpdate.username,
+            params.userUpdate.email,
+            params.userUpdate.first_name,
+            params.userUpdate.last_name,
+            params.userUpdate.role,
+            params.userUpdate.avatar,
+            params.userUpdate.address_user,
+            params.userUpdate.phone_number,
+            params.userUpdate.created_at,
+            params.userUpdate.updated_at,
+            params.userUpdate.created_by_id,
+            params.userUpdate.updated_by_id,
             params.id,
           ],
           (err, results) => {
@@ -236,7 +207,6 @@ const deleteUser = (params, callback) => {
     }
   );
 };
-
 
 export default {
   searchUsers,
