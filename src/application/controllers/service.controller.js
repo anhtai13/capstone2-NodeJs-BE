@@ -3,7 +3,7 @@ import Service from "../services/service.service.js";
 const getListServices = (req, res) => {
     const limit = req.query.limit;
     const offset = req.query.offset;
-    Service.getListServices({ limit, offset }, (err, result) => {
+    Service.getListSerices({ limit, offset }, (err, result) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
@@ -28,7 +28,7 @@ const getCategory = (req, res) => {
 
 const getServiceByCategory = (req, res) => {
     const category = req.params
-    Service.getServiceByCategory(category, (err, result) => {
+    Service.getSericeByCategory(category, (err, result) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
@@ -40,7 +40,7 @@ const getServiceByCategory = (req, res) => {
 }
 const addService = (req, res) => {
     const newService = req.body
-    Service.addService(newService, (err, service) => {
+    Service.addSerice(newService, (err, service) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
@@ -53,7 +53,7 @@ const addService = (req, res) => {
 
 const getDetailService = (req, res) => {
     const { id } = req.params;
-    Service.getDetailService({ id }, (err, result) => {
+    Service.getDetailSerice({ id }, (err, result) => {
         if (err) {
             res.status(500).send({
                 error: err.message
@@ -67,7 +67,7 @@ const getDetailService = (req, res) => {
 const updateService = (req, res) => {
     const serviceUpdate = req.body
 
-    Service.updateService(serviceUpdate, (err, result) => {
+    Service.updateSerice(serviceUpdate, (err, result) => {
         if (err) {
             console.log(err)
             res.status(500).send({
@@ -83,7 +83,7 @@ const updateService = (req, res) => {
 const deleteService = (req, res) => {
     const { id } = req.params;
 
-    Service.deleteService({ id }, (err, result) => {
+    Service.deleteSerice({ id }, (err, result) => {
         if (err) {
             res.status(500).send({
                 error: err.message

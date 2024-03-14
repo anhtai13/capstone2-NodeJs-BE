@@ -49,6 +49,7 @@ const login = (params, callback) => {
       }
     );
   }
+
   if (params.role == 2) {
     connection.query(
       "SELECT * FROM users WHERE username = ?",
@@ -90,6 +91,7 @@ const login = (params, callback) => {
       }
     );
   }
+  
   if (params.role == 3) {
     connection.query(
       "SELECT * FROM users WHERE username = ?",
