@@ -28,7 +28,7 @@ const getCategory = (req, res) => {
 
 const getServiceByCategory = (req, res) => {
     const category = req.params
-    Service.getSericeByCategory(category, (err, result) => {
+    Service.getServiceByCategory(category, (err, result) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
@@ -40,7 +40,7 @@ const getServiceByCategory = (req, res) => {
 }
 const addService = (req, res) => {
     const newService = req.body
-    Service.addSerice(newService, (err, service) => {
+    Service.addService(newService, (err, service) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
@@ -52,8 +52,8 @@ const addService = (req, res) => {
 }
 
 const getDetailService = (req, res) => {
-    const { id } = req.params;
-    Service.getDetailSerice({ id }, (err, result) => {
+    const { services_id } = req.params;
+    Service.getDetailService({ services_id }, (err, result) => {
         if (err) {
             res.status(500).send({
                 error: err.message
@@ -67,7 +67,7 @@ const getDetailService = (req, res) => {
 const updateService = (req, res) => {
     const serviceUpdate = req.body
 
-    Service.updateSerice(serviceUpdate, (err, result) => {
+    Service.updateService(serviceUpdate, (err, result) => {
         if (err) {
             console.log(err)
             res.status(500).send({
@@ -81,9 +81,9 @@ const updateService = (req, res) => {
 }
 
 const deleteService = (req, res) => {
-    const { id } = req.params;
+    const { service_id } = req.params;
 
-    Service.deleteSerice({ id }, (err, result) => {
+    Service.deleteService({ service_id }, (err, result) => {
         if (err) {
             res.status(500).send({
                 error: err.message

@@ -81,7 +81,7 @@ const addService = (params, callback) => {
 
 const getDetailService = (params, callback) => {
   connection.query(
-    `SELECT * FROM services WHERE services_id=?`,
+    `SELECT * FROM services WHERE service_id=?`,
     [params.services_id],
     (error, results, fields) => {
       if (error) {

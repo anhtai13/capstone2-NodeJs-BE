@@ -33,7 +33,7 @@ const getCategory = (params, callback) => {
   });
 };
 // hàm add dịch vụ
-const addSerice = (params, callback) => {
+const addService = (params, callback) => {
     if (!params.name && !params.price) {
         callback({ message: "Please complete all information" }, null);
       }
@@ -57,11 +57,11 @@ const addSerice = (params, callback) => {
   }
 };
 
-const getDetailSerice = (params, callback) => {
-  if (!validateIdDetailAndDelete(params.id)) {
+const getDetailService = (params, callback) => {
+  if (!validateIdDetailAndDelete(params.services_id)) {
     callback({ message: "Invalid id" }, null);
   } else {
-    serviceRepositories.getDetailSerice(params, (err, result) => {
+    serviceRepositories.getDetailService(params, (err, result) => {
       if (err) {
         callback(err, null);
       } else {
@@ -71,7 +71,7 @@ const getDetailSerice = (params, callback) => {
   }
 };
 
-const updateSerice = (params, callback) => {
+const updateService = (params, callback) => {
   if (
     !params.name &&
     !params.sku &&
@@ -83,7 +83,7 @@ const updateSerice = (params, callback) => {
   } else if (!validatePrice(params.price)) {
     callback({ message: "Invalid price" }, null);
   } else {
-    serviceRepositories.updateSerice(params, (err, result) => {
+    serviceRepositories.updateService(params, (err, result) => {
       if (err) {
         callback(err, null);
       } else {
@@ -93,11 +93,11 @@ const updateSerice = (params, callback) => {
   }
 };
 
-const deleteSerice = (params, callback) => {
-  if (!validateIdDetailAndDelete(params.id)) {
+const deleteService = (params, callback) => {
+  if (!validateIdDetailAndDelete(params.service_id)) {
     callback({ message: "Invalid id" }, null);
   } else {
-    serviceRepositories.deleteSerice(params, (err, result) => {
+    serviceRepositories.deleteService(params, (err, result) => {
       if (err) {
         callback(err, null);
       } else {
@@ -111,8 +111,8 @@ export default {
   searchServices,
   getCategory,
   getServiceByCategory,
-  addSerice,
-  getDetailSerice,
-  updateSerice,
-  deleteSerice,
+  addService,
+  getDetailService,
+  updateService,
+  deleteService,
 };
