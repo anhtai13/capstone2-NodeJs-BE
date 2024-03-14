@@ -4,6 +4,16 @@ import {
 } from "../../utils/validationProduct.js";
 import serviceRepositories from "../repositories/service.repositories.js";
 
+const getListServices = (params, callback) => {
+  serviceRepositories.getListServices(params, (err, result) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, result);
+    }
+  });
+};
+
 const searchServices = (params, callback) => {
   serviceRepositories.searchServices(params, (err, result) => {
     if (err) {
@@ -32,6 +42,7 @@ const getCategory = (params, callback) => {
     }
   });
 };
+
 // hàm add dịch vụ
 const addSerice = (params, callback) => {
     if (!params.name && !params.price) {
@@ -57,11 +68,11 @@ const addSerice = (params, callback) => {
   }
 };
 
-const getDetailSerice = (params, callback) => {
-  if (!validateIdDetailAndDelete(params.id)) {
+const getDetailService = (params, callback) => {
+  if (!validateIdDetailAndDelete(params.serivce_id)) {
     callback({ message: "Invalid id" }, null);
   } else {
-    serviceRepositories.getDetailSerice(params, (err, result) => {
+    serviceRepositories.getDetailService(params, (err, result) => {
       if (err) {
         callback(err, null);
       } else {
@@ -109,10 +120,11 @@ const deleteSerice = (params, callback) => {
 
 export default {
   searchServices,
+  getListServices,
   getCategory,
   getServiceByCategory,
   addSerice,
-  getDetailSerice,
+  getDetailService,
   updateSerice,
   deleteSerice,
 };

@@ -1,9 +1,22 @@
 import Service from "../services/service.service.js";
 
-const searchServices = (req, res) => {
+const getListServices = (req, res) => {
     const limit = req.query.limit;
     const offset = req.query.offset;
-    Service.searchServices({ limit, offset }, (err, result) => {
+    Service.getListServices({ limit, offset }, (err, result) => {
+        if (err) {
+            res.status(500).send({
+                errMessage: err.message
+            });
+        } else {
+            res.status(200).send(result);
+        }
+    })
+}
+
+const searchServices = (req, res) => {
+    const keyword = req.query.keyword;
+    Service.searchServices({ keyword }, (err, result) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
@@ -52,8 +65,8 @@ const addService = (req, res) => {
 }
 
 const getDetailService = (req, res) => {
-    const { id } = req.params;
-    Service.getDetailSerice({ id }, (err, result) => {
+    const { service_id } = req.params;
+    Service.getDetailService({  }, (err, result) => {
         if (err) {
             res.status(500).send({
                 error: err.message
@@ -96,6 +109,7 @@ const deleteService = (req, res) => {
 
 export default {
     searchServices,
+    getListServices,
     getCategory,
     getServiceByCategory,
     addService,

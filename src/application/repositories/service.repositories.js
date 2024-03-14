@@ -3,7 +3,7 @@ import getConnection from "../../config/connection.database.js";
 const connection = getConnection();
 let limitDefault = 5;
 let offsetDefault = 0;
-const searchServices = (params, callback) => {
+const getListServices = (params, callback) => {
   if (params.limit && params.offset) {
     limitDefault = params.limit;
     offsetDefault = params.offset;
@@ -26,6 +26,18 @@ const searchServices = (params, callback) => {
       }
     });
   }
+};
+
+const searchServices = (params, callback) => {
+  const keyword = params.keyword;
+  const query = `SELECT * FROM services WHERE name_service LIKE '%${keyword}%'`;
+  connection.query(query, (error, results) => {
+    if (error) {
+      callback({ message: "Something wrong!" }, null);
+    } else {
+      callback(null, results);
+    }
+  });
 };
 
 const getCategory = (params, callback) => {
@@ -81,8 +93,8 @@ const addService = (params, callback) => {
 
 const getDetailService = (params, callback) => {
   connection.query(
-    `SELECT * FROM services WHERE services_id=?`,
-    [params.services_id],
+    `SELECT * FROM services WHERE service_id=?`,
+    [params.service_id],
     (error, results, fields) => {
       if (error) {
         callback({ message: "Something wrong!" }, null);
@@ -162,6 +174,7 @@ const deleteService = (params, callback) => {
 
 export default {
   searchServices,
+  getListServices,
   getCategory,
   getServiceByCategory,
   addService,
