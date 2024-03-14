@@ -19,10 +19,10 @@ router.get("/users/:id", userController.getDetailUser);
 router.put("/users/:id", userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
 
-// Product management
+// Services management
 router.get("/category", serviceController.getCategory);
 router.get("/category/:category", serviceController.getServiceByCategory);
-router.get("/services", serviceController.searchServices);
+router.get("/services", serviceController.getListServices);
 router.post("/services", serviceController.addService);
 router.get("/services/:services_id", serviceController.getDetailService);
 router.put("/services", serviceController.updateService);

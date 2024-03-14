@@ -14,6 +14,16 @@ const getListServices = (params, callback) => {
   });
 };
 
+const searchServices = (params, callback) => {
+  serviceRepositories.searchServices(params, (err, result) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, result);
+    }
+  });
+};
+
 const getServiceByCategory = (params, callback) => {
   serviceRepositories.getServiceByCategory(params, (err, result) => {
     if (err) {
@@ -32,6 +42,7 @@ const getCategory = (params, callback) => {
     }
   });
 };
+
 // hàm add dịch vụ
 const addService = (params, callback) => {
     if (!params.name_service && !params.unit_price) {
@@ -58,7 +69,7 @@ const addService = (params, callback) => {
 };
 
 const getDetailService = (params, callback) => {
-  if (!validateIdDetailAndDelete(params.services_id)) {
+  if (!validateIdDetailAndDelete(params.serivce_id)) {
     callback({ message: "Invalid id" }, null);
   } else {
     serviceRepositories.getDetailService(params, (err, result) => {
@@ -108,6 +119,7 @@ const deleteService = (params, callback) => {
 };
 
 export default {
+  searchServices,
   getListServices,
   getCategory,
   getServiceByCategory,
