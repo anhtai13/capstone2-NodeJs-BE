@@ -1,5 +1,5 @@
-export const validatePrice = (price) => {
-    return typeof price === 'number' && price > 1000
+export function validatePrice(unit_price) {
+    return typeof unit_price === 'number' && unit_price > 1000
 }
 
 export const validateIdDetailAndDelete = (id) => {

@@ -24,7 +24,7 @@ router.get("/category", serviceController.getCategory);
 router.get("/category/:category", serviceController.getServiceByCategory);
 router.get("/services", serviceController.searchServices);
 router.post("/services", serviceController.addService);
-router.get("/services/:id", serviceController.getDetailService);
+router.get("/services/:services_id", serviceController.getDetailService);
 router.put("/services", serviceController.updateService);
 router.delete("/services/:id", serviceController.deleteService);
 

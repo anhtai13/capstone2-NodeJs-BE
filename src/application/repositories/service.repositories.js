@@ -3,7 +3,7 @@ import getConnection from "../../config/connection.database.js";
 const connection = getConnection();
 let limitDefault = 5;
 let offsetDefault = 0;
-const searchServices = (params, callback) => {
+const getListServices = (params, callback) => {
   if (params.limit && params.offset) {
     limitDefault = params.limit;
     offsetDefault = params.offset;
@@ -161,7 +161,7 @@ const deleteService = (params, callback) => {
 };
 
 export default {
-  searchServices,
+  getListServices,
   getCategory,
   getServiceByCategory,
   addService,
