@@ -1,9 +1,9 @@
 import Service from "../services/service.service.js";
 
-const getListServices = (req, res) => {
+const searchServices = (req, res) => {
     const limit = req.query.limit;
     const offset = req.query.offset;
-    Service.getListServices({ limit, offset }, (err, result) => {
+    Service.searchServices({ limit, offset }, (err, result) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
@@ -95,7 +95,7 @@ const deleteService = (req, res) => {
 }
 
 export default {
-    getListServices,
+    searchServices,
     getCategory,
     getServiceByCategory,
     addService,

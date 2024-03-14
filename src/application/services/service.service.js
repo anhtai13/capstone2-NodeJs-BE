@@ -4,8 +4,8 @@ import {
 } from "../../utils/validationProduct.js";
 import serviceRepositories from "../repositories/service.repositories.js";
 
-const getListServices = (params, callback) => {
-  serviceRepositories.getListServices(params, (err, result) => {
+const searchServices = (params, callback) => {
+  serviceRepositories.searchServices(params, (err, result) => {
     if (err) {
       callback(err, null);
     } else {
@@ -108,7 +108,7 @@ const deleteSerice = (params, callback) => {
 };
 
 export default {
-  getListServices,
+  searchServices,
   getCategory,
   getServiceByCategory,
   addSerice,
