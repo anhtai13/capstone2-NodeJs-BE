@@ -14,8 +14,8 @@ const getListServices = (params, callback) => {
   });
 };
 
-const getSericeByCategory = (params, callback) => {
-  serviceRepositories.getSericeByCategory(params, (err, result) => {
+const getServiceByCategory = (params, callback) => {
+  serviceRepositories.getServiceByCategory(params, (err, result) => {
     if (err) {
       callback(err, null);
     } else {
@@ -108,9 +108,9 @@ const deleteSerice = (params, callback) => {
 };
 
 export default {
-  getListSerices,
+  getListServices,
   getCategory,
-  getSericeByCategory,
+  getServiceByCategory,
   addSerice,
   getDetailSerice,
   updateSerice,

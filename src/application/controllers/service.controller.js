@@ -3,7 +3,7 @@ import Service from "../services/service.service.js";
 const getListServices = (req, res) => {
     const limit = req.query.limit;
     const offset = req.query.offset;
-    Service.getListSerices({ limit, offset }, (err, result) => {
+    Service.getListServices({ limit, offset }, (err, result) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
