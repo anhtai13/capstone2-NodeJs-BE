@@ -14,6 +14,19 @@ const getListServices = (req, res) => {
     })
 }
 
+const searchServices = (req, res) => {
+    const keyword = req.query.keyword;
+    Service.searchServices({ keyword }, (err, result) => {
+        if (err) {
+            res.status(500).send({
+                errMessage: err.message
+            });
+        } else {
+            res.status(200).send(result);
+        }
+    })
+}
+
 const getCategory = (req, res) => {
     Service.getCategory("", (err, result) => {
         if (err) {
@@ -52,8 +65,8 @@ const addService = (req, res) => {
 }
 
 const getDetailService = (req, res) => {
-    const { id } = req.params;
-    Service.getDetailService({ id }, (err, result) => {
+    const { service_id } = req.params;
+    Service.getDetailService({  }, (err, result) => {
         if (err) {
             res.status(500).send({
                 error: err.message
@@ -81,9 +94,9 @@ const updateService = (req, res) => {
 }
 
 const deleteService = (req, res) => {
-    const { id } = req.params;
+    const { service_id } = req.params;
 
-    Service.deleteService({ id }, (err, result) => {
+    Service.deleteService({ service_id }, (err, result) => {
         if (err) {
             res.status(500).send({
                 error: err.message
@@ -95,6 +108,7 @@ const deleteService = (req, res) => {
 }
 
 export default {
+    searchServices,
     getListServices,
     getCategory,
     getServiceByCategory,

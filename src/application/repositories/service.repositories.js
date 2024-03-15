@@ -28,6 +28,18 @@ const getListServices = (params, callback) => {
   }
 };
 
+const searchServices = (params, callback) => {
+  const keyword = params.keyword;
+  const query = `SELECT * FROM services WHERE name_service LIKE '%${keyword}%'`;
+  connection.query(query, (error, results) => {
+    if (error) {
+      callback({ message: "Something wrong!" }, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
 const getCategory = (params, callback) => {
   connection.query(`SELECT * FROM service_category`, (error, results) => {
     if (error) {
@@ -81,8 +93,8 @@ const addService = (params, callback) => {
 
 const getDetailService = (params, callback) => {
   connection.query(
-    `SELECT * FROM services WHERE services_id=?`,
-    [params.services_id],
+    `SELECT * FROM services WHERE service_id=?`,
+    [params.service_id],
     (error, results, fields) => {
       if (error) {
         callback({ message: "Something wrong!" }, null);
@@ -161,6 +173,7 @@ const deleteService = (params, callback) => {
 };
 
 export default {
+  searchServices,
   getListServices,
   getCategory,
   getServiceByCategory,
