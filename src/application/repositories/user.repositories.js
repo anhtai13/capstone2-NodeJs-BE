@@ -136,7 +136,8 @@ const getDetailUser = (params, callback) => {
   );
 };
 
-const updateUser = (params, callback) => {
+const updateUser = async (params, callback) => {
+  
   const hashedPassword = bcrypt.hashSync(params.password, salt);
   connection.query(
     `SELECT * FROM users WHERE user_id=?`,
