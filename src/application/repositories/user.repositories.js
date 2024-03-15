@@ -76,7 +76,6 @@ const searchUsers = (params, callback) => {
 };
 
 const addUser = (params, callback) => {
-  console.log(params);
   const hashedPassword = bcrypt.hashSync(params.password, salt);
   connection.query(
     "SELECT * FROM users WHERE username = ?",
