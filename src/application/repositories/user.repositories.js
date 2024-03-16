@@ -136,8 +136,7 @@ const getDetailUser = (params, callback) => {
 };
 
 const updateUser = async (params, callback) => {
-  
-  const hashedPassword = bcrypt.hashSync(params.password, salt);
+  const hashedPassword = bcrypt.hashSync(params.userUpdate.password, salt);
   connection.query(
     `SELECT * FROM users WHERE user_id=?`,
     [params.id],
@@ -147,7 +146,7 @@ const updateUser = async (params, callback) => {
         callback({ message: "Có lỗi xảy ra!" }, null);
       } else if (results.length == 0) {
         callback({ message: "User not found" }, null);
-      } else if (params.password.length < 1) {
+      } else if (params.userUpdate.password.length < 1) {
         connection.query(
           "update users set username=?,email=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
           [
@@ -168,7 +167,7 @@ const updateUser = async (params, callback) => {
           (err, results) => {
             // Xử lý lỗi của truy vấn cập nhật
             if (err) {
-              callback({ message: "Có lỗi xảy ra!" }, null);
+              callback({ message: "Có lỗi xảy raaaaaaaaaaaaaaaaaa!" }, null);
             } else {
               callback(null, results);
             }
@@ -177,7 +176,7 @@ const updateUser = async (params, callback) => {
       } else {
         // Cập nhật thông tin người dùng trong cơ sở dữ liệu
         connection.query(
-          "UPDATE users SET username=?,email=?,password=?,first_name=?, last_name=?, role=?, avatar=?,address_user=?,phone_number=? created_at=?, updated_at=?, created_by_id=?, updated_by_id=? WHERE user_id=?",
+          "UPDATE users SET username=?,email=?,password=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? WHERE user_id=?",
           [
             params.userUpdate.username,
             params.userUpdate.email,
