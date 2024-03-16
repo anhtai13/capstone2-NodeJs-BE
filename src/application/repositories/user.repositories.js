@@ -135,69 +135,64 @@ const getDetailUser = (params, callback) => {
   );
 };
 
-const updateUser = async (params, callback) => {
-  
+const updateUser = (params, callback) => {
   const hashedPassword = bcrypt.hashSync(params.password, salt);
   connection.query(
     `SELECT * FROM users WHERE user_id=?`,
     [params.id],
     (error, results, fields) => {
-      // Xử lý kết quả truy vấn và lỗi
       if (error) {
-        callback({ message: "Có lỗi xảy ra!" }, null);
+        callback({ message: "Something wrong!" }, null);
       } else if (results.length == 0) {
         callback({ message: "User not found" }, null);
       } else if (params.password.length < 1) {
         connection.query(
           "update users set username=?,email=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
           [
-            params.userUpdate.username,
-            params.userUpdate.email,
-            params.userUpdate.first_name,
-            params.userUpdate.last_name,
-            params.userUpdate.role,
-            params.userUpdate.avatar,
-            params.userUpdate.address_user,
-            params.userUpdate.phone_number,
-            params.userUpdate.created_at,
-            params.userUpdate.updated_at,
-            params.userUpdate.created_by_id,
-            params.userUpdate.updated_by_id,
+            params.updateUser.username,
+            params.updateUser.email,
+            params.updateUser.first_name,
+            params.updateUser.last_name,
+            params.updateUser.role,
+            params.updateUser.avatar,
+            params.updateUser.address_user,
+            params.updateUser.phone_number,
+            params.updateUser.created_at,
+            params.updateUser.updated_at,
+            params.updateUser.created_by_id,
+            params.updateUser.updated_by_id,
             params.id,
           ],
           (err, results) => {
-            // Xử lý lỗi của truy vấn cập nhật
             if (err) {
-              callback({ message: "Có lỗi xảy ra!" }, null);
+              callback({ message: "Something wrong!" }, null);
             } else {
               callback(null, results);
             }
           }
         );
       } else {
-        // Cập nhật thông tin người dùng trong cơ sở dữ liệu
         connection.query(
-          "UPDATE users SET username=?,email=?,password=?,first_name=?, last_name=?, role=?, avatar=?,address_user=?,phone_number=? created_at=?, updated_at=?, created_by_id=?, updated_by_id=? WHERE user_id=?",
+          "update users set username=?,email=?,password=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
           [
-            params.userUpdate.username,
-            params.userUpdate.email,
+            params.updateUser.username,
+            params.updateUser.email,
             hashedPassword,
-            params.userUpdate.first_name,
-            params.userUpdate.last_name,
-            params.userUpdate.role,
-            params.userUpdate.avatar,
-            params.userUpdate.address_user,
-            params.userUpdate.phone_number,
-            params.userUpdate.created_at,
-            params.userUpdate.updated_at,
-            params.userUpdate.created_by_id,
-            params.userUpdate.updated_by_id,
+            params.updateUser.first_name,
+            params.updateUser.last_name,
+            params.updateUser.role,
+            params.updateUser.avatar,
+            params.updateUser.address_user,
+            params.updateUser.phone_number,
+            params.updateUser.created_at,
+            params.updateUser.updated_at,
+            params.updateUser.created_by_id,
+            params.updateUser.updated_by_id,
             params.id,
           ],
           (err, results) => {
-            // Xử lý lỗi của truy vấn cập nhật
             if (err) {
-              callback({ message: "Có lỗi xảy ra!" }, null);
+              callback({ message: "Something wrong!" }, null);
             } else {
               callback(null, results);
             }
