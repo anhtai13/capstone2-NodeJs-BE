@@ -4,13 +4,13 @@ import { randomString } from "../../utils/randomString.js";
 
 const connection = getConnection();
 const login = (params, callback) => {
-  if(params.username === "" || params.password === ""){
-    callback({message: "Bạn hãy nhập đầy đủ thông tin để đăng nhập"}, null);
+  if (params.username === "" || params.password === "") {
+    callback({ message: "Bạn hãy nhập đầy đủ thông tin để đăng nhập" }, null);
     return;
   }
-  if (params.role == 1) {
+  if (params.role == 1 || params.role == 2) { // Sửa điều kiện ở đây
     connection.query(
-      "SELECT * FROM users WHERE username = ? and role=1",
+      "SELECT * FROM users WHERE username = ? AND (role = 1 OR role = 2)", // Sửa câu truy vấn
       [params.username],
       (error, results) => {
         if (error) {
@@ -36,21 +36,22 @@ const login = (params, callback) => {
                     callback({ message: "Something went wrong!" }, null);
                     return;
                   }
-                  callback(null, { key: key, id: results[0].user_id});
+                  callback(null, { key: key, id: results[0].user_id });
                 }
               );
-            }
-            else{
-              callback({ message: "Mật khẩu bị sai"}, null)
+            } else {
+              callback({ message: "Mật khẩu bị sai" }, null);
               return;
             }
           }
         );
       }
     );
+  } else {
+    callback({ message: "Role không hợp lệ" }, null); // Thêm thông báo cho role không hợp lệ
   }
 
-  if (params.role == 2) {
+  if (params.role == 3) {
     connection.query(
       "SELECT * FROM users WHERE username = ?",
       [params.username],
@@ -92,7 +93,7 @@ const login = (params, callback) => {
     );
   }
   
-  if (params.role == 3) {
+  if (params.role == 4) {
     connection.query(
       "SELECT * FROM users WHERE username = ?",
       [params.username],
