@@ -135,8 +135,8 @@ const getDetailUser = (params, callback) => {
   );
 };
 
-const updateUser = (params, callback) => {
-  const hashedPassword = bcrypt.hashSync(params.password, salt);
+const updateUser = async (params, callback) => {
+  const hashedPassword = bcrypt.hashSync(params.userUpdate.password, salt);
   connection.query(
     `SELECT * FROM users WHERE user_id=?`,
     [params.id],
@@ -145,27 +145,27 @@ const updateUser = (params, callback) => {
         callback({ message: "Something wrong!" }, null);
       } else if (results.length == 0) {
         callback({ message: "User not found" }, null);
-      } else if (params.password.length < 1) {
+      } else if (params.userUpdate.password.length < 1) {
         connection.query(
           "update users set username=?,email=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
           [
-            params.updateUser.username,
-            params.updateUser.email,
-            params.updateUser.first_name,
-            params.updateUser.last_name,
-            params.updateUser.role,
-            params.updateUser.avatar,
-            params.updateUser.address_user,
-            params.updateUser.phone_number,
-            params.updateUser.created_at,
-            params.updateUser.updated_at,
-            params.updateUser.created_by_id,
-            params.updateUser.updated_by_id,
+            params.userUpdate.username,
+            params.userUpdate.email,
+            params.userUpdate.first_name,
+            params.userUpdate.last_name,
+            params.userUpdate.role,
+            params.userUpdate.avatar,
+            params.userUpdate.address_user,
+            params.userUpdate.phone_number,
+            params.userUpdate.created_at,
+            params.userUpdate.updated_at,
+            params.userUpdate.created_by_id,
+            params.userUpdate.updated_by_id,
             params.id,
           ],
           (err, results) => {
             if (err) {
-              callback({ message: "Something wrong!" }, null);
+              callback({ message: "Có lỗi xảy raaaaaaaaaaaaaaaaaa!" }, null);
             } else {
               callback(null, results);
             }
@@ -173,21 +173,21 @@ const updateUser = (params, callback) => {
         );
       } else {
         connection.query(
-          "update users set username=?,email=?,password=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
+          "UPDATE users SET username=?,email=?,password=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? WHERE user_id=?",
           [
-            params.updateUser.username,
-            params.updateUser.email,
+            params.userUpdate.username,
+            params.userUpdate.email,
             hashedPassword,
-            params.updateUser.first_name,
-            params.updateUser.last_name,
-            params.updateUser.role,
-            params.updateUser.avatar,
-            params.updateUser.address_user,
-            params.updateUser.phone_number,
-            params.updateUser.created_at,
-            params.updateUser.updated_at,
-            params.updateUser.created_by_id,
-            params.updateUser.updated_by_id,
+            params.userUpdate.first_name,
+            params.userUpdate.last_name,
+            params.userUpdate.role,
+            params.userUpdate.avatar,
+            params.userUpdate.address_user,
+            params.userUpdate.phone_number,
+            params.userUpdate.created_at,
+            params.userUpdate.updated_at,
+            params.userUpdate.created_by_id,
+            params.userUpdate.updated_by_id,
             params.id,
           ],
           (err, results) => {
