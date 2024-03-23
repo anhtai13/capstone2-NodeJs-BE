@@ -94,9 +94,9 @@ const updateService = (req, res) => {
 }
 
 const deleteService = (req, res) => {
-    const { service_id } = req.params;
+    const { id } = req.params;
 
-    Service.deleteService({ service_id }, (err, result) => {
+    Service.deleteService({ id }, (err, result) => {
         if (err) {
             res.status(500).send({
                 error: err.message

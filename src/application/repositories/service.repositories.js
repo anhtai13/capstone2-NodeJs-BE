@@ -149,7 +149,7 @@ const updateService = (params, callback) => {
 const deleteService = (params, callback) => {
   connection.query(
     `SELECT * FROM services WHERE service_id=?`,
-    [params.service_id],
+    [params.id],
     (error, results, fields) => {
       if (error) {
         callback({ message: "Something wrong!" }, null);
@@ -158,7 +158,7 @@ const deleteService = (params, callback) => {
       } else {
         connection.query(
           "delete from services where service_id=?",
-          [params.service_id],
+          [params.id],
           (err, results) => {
             if (err) {
               callback({ message: "Something wrong!" }, null);
