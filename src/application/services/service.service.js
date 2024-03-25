@@ -1,7 +1,7 @@
 import {
   validateIdDetailAndDelete,
   validatePrice,
-} from "../../utils/validationProduct.js";
+} from "../../utils/validationService.js";
 import serviceRepositories from "../repositories/service.repositories.js";
 
 const getListServices = (params, callback) => {
