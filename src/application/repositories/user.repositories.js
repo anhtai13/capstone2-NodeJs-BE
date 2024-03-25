@@ -141,9 +141,8 @@ const updateUser = async (params, callback) => {
     `SELECT * FROM users WHERE user_id=?`,
     [params.id],
     (error, results, fields) => {
-      // Xử lý kết quả truy vấn và lỗi
       if (error) {
-        callback({ message: "Có lỗi xảy ra!" }, null);
+        callback({ message: "Something wrong!" }, null);
       } else if (results.length == 0) {
         callback({ message: "User not found" }, null);
       } else if (params.userUpdate.password.length < 1) {
@@ -165,7 +164,6 @@ const updateUser = async (params, callback) => {
             params.id,
           ],
           (err, results) => {
-            // Xử lý lỗi của truy vấn cập nhật
             if (err) {
               callback({ message: "Có lỗi xảy raaaaaaaaaaaaaaaaaa!" }, null);
             } else {
@@ -174,7 +172,6 @@ const updateUser = async (params, callback) => {
           }
         );
       } else {
-        // Cập nhật thông tin người dùng trong cơ sở dữ liệu
         connection.query(
           "UPDATE users SET username=?,email=?,password=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? WHERE user_id=?",
           [
@@ -194,9 +191,8 @@ const updateUser = async (params, callback) => {
             params.id,
           ],
           (err, results) => {
-            // Xử lý lỗi của truy vấn cập nhật
             if (err) {
-              callback({ message: "Có lỗi xảy ra!" }, null);
+              callback({ message: "Something wrong!" }, null);
             } else {
               callback(null, results);
             }
