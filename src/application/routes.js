@@ -1,6 +1,5 @@
 import { Router } from "express";
 import userController from "./controllers/user.controller.js";
-import productController from "./controllers/product.controller.js";
 import authController from "./controllers/auth.controller.js";
 import orderController from "./controllers/order.controller.js";
 import orderDetailController from "./controllers/orderDetail.controller.js";
