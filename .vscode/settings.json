@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/d786e7b4-d3a0-4468-b226-48410e6365ea/resourceGroups/clean-house-service_group/providers/Microsoft.Web/sites/clean-house-service",
+  "appService.deploySubpath": "."
+}

@@ -105,7 +105,7 @@ const updateService = (params, callback) => {
 };
 
 const deleteService = (params, callback) => {
-  if (!validateIdDetailAndDelete(params.service_id)) {
+  if (!validateIdDetailAndDelete(params.id)) {
     callback({ message: "Invalid id" }, null);
   } else {
     serviceRepositories.deleteService(params, (err, result) => {
