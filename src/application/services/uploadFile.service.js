@@ -1,8 +1,8 @@
 import saveFile from "../repositories/uploadFile.repositories.js";
 
-const uploadFileServices = async (files) => {
+const uploadFileServices = async (service) => {
   
-  return await saveFile.saveFiles(files);
+  return await saveFile.saveFiles(service);
   
 };
 

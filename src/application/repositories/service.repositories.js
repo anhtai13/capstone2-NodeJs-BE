@@ -74,7 +74,7 @@ const addService = (params, callback) => {
       params.description,
       params.name,
       params.price,
-      params.image,
+      params.filename,
       params.category_id,
       params.created_at,
       params.created_by_id,
