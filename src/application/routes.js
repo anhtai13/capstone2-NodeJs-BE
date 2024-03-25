@@ -1,11 +1,11 @@
 import { Router } from "express";
 import userController from "./controllers/user.controller.js";
+import serviceController from "./controllers/service.controller.js";
 import authController from "./controllers/auth.controller.js";
 import orderController from "./controllers/order.controller.js";
 import orderDetailController from "./controllers/orderDetail.controller.js";
 import contactController from "./controllers/contact.controller.js";
-import serviceController from "./controllers/service.controller.js";
-
+import uploadController   from "./controllers/uploadFile.controller.js";
 const router = Router();
 
 //Authentication
@@ -16,15 +16,15 @@ router.post("/logout", authController.logout);
 router.get("/users", userController.searchUsers);
 router.post("/users", userController.addUser);
 router.get("/users/:id", userController.getDetailUser);
-router.put("/users", userController.updateUser);
+router.put("/users/:id", userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
 
-// Service management
+// Services management
 router.get("/category", serviceController.getCategory);
 router.get("/category/:category", serviceController.getServiceByCategory);
 router.get("/services", serviceController.getListServices);
 router.post("/services", serviceController.addService);
-router.get("/services/:id", serviceController.getDetailService);
+router.get("/services/:services_id", serviceController.getDetailService);
 router.put("/services", serviceController.updateService);
 router.delete("/services/:id", serviceController.deleteService);
 
@@ -47,4 +47,8 @@ router.get("/contact/:id", contactController.getDetailContact);
 router.post("/contact", contactController.addContact);
 router.put("/contact", contactController.updateContact);
 router.delete("/contact/:id", contactController.deleteContact);
+
+// upload file
+router.post('/upload', uploadController.uploadImage, uploadController.uploadFile);
+
 export default router;
