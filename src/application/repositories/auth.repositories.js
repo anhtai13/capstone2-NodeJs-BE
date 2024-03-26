@@ -47,9 +47,7 @@ const login = (params, callback) => {
         );
       }
     );
-  } else {
-    callback({ message: "Role không hợp lệ" }, null); // Thêm thông báo cho role không hợp lệ
-  }
+  } 
 
   if (params.role == 3) {
     connection.query(
