@@ -15,14 +15,15 @@ const upload = multer({ storage });
 
 const uploadImage = upload.single("image");
 
-function uploadFile(req, res) {
+// check req and res to add service and upload file image 
+function addServices(req, res) {
   try {
     const service = {
       ...req.body, // assuming all other fields are in req.body
       image: req.file.filename, // the image file name
     };
     console.log(service);
-    const result = uploadFileService.uploadFileServices(service);
+    const result = uploadFileService.addFileServices(service);
     res.status(200).json({
       success: true,
       data: result,
@@ -36,7 +37,33 @@ function uploadFile(req, res) {
   }
 }
 
+// check req and res to edit service and upload file image 
+function editService(req, res) {
+  try {
+    const service = {
+      ...req.body, // assuming all other fields are in req.body
+      image: req.file.filename, // the image file name
+      id: req.params.id, 
+    };
+    console.log(service);
+    const result = uploadFileService.editFileServices(service);
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
+
+
 export default {
-  uploadFile,
+  addServices,
+  editService,
   uploadImage,
 };

@@ -57,7 +57,7 @@ const updateUser = (req, res) => {
     id: id,
     userUpdate: userUpdate,
   };
-  userService.updateUser(info, (err, result) => {
+  userService.updateUser(info, (err) => {
     if (err) {
       res.status(500).send({
         errData: err.data,

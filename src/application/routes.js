@@ -49,6 +49,9 @@ router.put("/contact", contactController.updateContact);
 router.delete("/contact/:id", contactController.deleteContact);
 
 // upload file
-router.post('/upload', uploadController.uploadImage, uploadController.uploadFile);
+router.post('/upload', uploadController.uploadImage, uploadController.addServices);
+router.put('/upload/:id', uploadController.uploadImage, uploadController.editService);
+
+
 
 export default router;

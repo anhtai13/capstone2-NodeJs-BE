@@ -147,8 +147,8 @@ const updateUser = async (params, callback) => {
         callback({ message: "User not found" }, null);
       } else if (params.userUpdate.password.length < 1) {
         connection.query(
-          "update users set username=?,email=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? where user_id=?",
-          [
+          "update users set username=? , email=? , first_name=? , last_name=? , role=? , avatar=? , address_user=? , phone_number=? ,created_at=? , updated_at=? , created_by_id=? , updated_by_id=?  where user_id=?",
+          [ 
             params.userUpdate.username,
             params.userUpdate.email,
             params.userUpdate.first_name,
@@ -173,7 +173,7 @@ const updateUser = async (params, callback) => {
         );
       } else {
         connection.query(
-          "UPDATE users SET username=?,email=?,password=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=? WHERE user_id=?",
+          "UPDATE users SET username=?,email=?,password=?,first_name=?,last_name=?,role=?,avatar=?,address_user=?,phone_number=?,created_at=?,updated_at=?,created_by_id=?,updated_by_id=?  WHERE user_id=?",
           [
             params.userUpdate.username,
             params.userUpdate.email,
