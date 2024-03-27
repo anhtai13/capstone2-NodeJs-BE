@@ -50,6 +50,7 @@ const getDetailUser = (req, res) => {
   });
 };
 
+
 const updateUser = (req, res) => {
   const { id } = req.params;
   const userUpdate = req.body;
@@ -83,10 +84,35 @@ const deleteUser = (req, res) => {
   });
 };
 
+
+const updateInformationCustomer = (req, res) => {     // thay đổi thông tin cá nhân customer
+  const { id } = req.params;
+  const userData = req.body; // Dữ liệu mới của người dùng
+
+  console.log("Received request to update user with ID:", id);
+  console.log("New user data:", userData);
+
+  userService.updateInformationCustomer(id, userData, (err, result) => {
+    if (err) {
+      console.error("Error updating user:", err.message);
+      res.status(500).send({
+        error: err.message,
+      });
+    } else {
+      console.log("User updated successfully");
+      res.status(200).send({
+        message: "User updated successfully",
+      });
+    }
+  });
+};
+
+
 export default {
   searchUsers,
   addUser,
   getDetailUser,
   updateUser,
   deleteUser,
+  updateInformationCustomer,
 };
