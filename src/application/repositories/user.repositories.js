@@ -235,10 +235,32 @@ const deleteUser = (params, callback) => {
   );
 };
 
+
+const updateInformationCustomer = (id, userData, callback) => {
+  console.log("Updating user with ID in repository:", id);
+  console.log("New user data in repository:", userData);
+
+  connection.query(
+    `UPDATE users SET first_name=?, last_name=?, phone_number=?, address_user=? WHERE user_id=?`,
+    [userData.first_name, userData.last_name, userData.phone_number, userData.address_user, id],
+    (error, results, fields) => {
+      if (error) {
+        console.error("Error updating user in repository:", error.message);
+        callback({ message: "Something went wrong while updating user" }, null);
+      } else {
+        console.log("User updated successfully in repository");
+        callback(null, results);
+      }
+    }
+  );
+};
+
+
 export default {
   searchUsers,
   addUser,
   getDetailUser,
   updateUser,
   deleteUser,
+  updateInformationCustomer,
 };

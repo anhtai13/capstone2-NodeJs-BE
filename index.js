@@ -5,7 +5,9 @@ import fs from "fs";
 import router from "./src/application/routes.js";
 import cors from "cors";
 const app = express();
-
+import path from 'path';
+import { fileURLToPath } from "url";
+import { dirname } from 'path';
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -30,6 +32,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use(cors());
+
 //Cấu hình body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -42,6 +46,11 @@ const accessLogStream = fs.createWriteStream("logs/access.log", { flags: "a" });
 app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use("/", router);
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.use('/images', express.static(path.join(__dirname, 'src/public/images')));
 
 app.listen(3131, () => {
   console.log("Example app listening on port 3131!");
