@@ -30,6 +30,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use(cors());
+
 //Cấu hình body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -42,6 +44,8 @@ const accessLogStream = fs.createWriteStream("logs/access.log", { flags: "a" });
 app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use("/", router);
+
+app.use(express.static("public"));
 
 app.listen(3131, () => {
   console.log("Example app listening on port 3131!");
