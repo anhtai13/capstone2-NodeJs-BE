@@ -18,6 +18,8 @@ router.post("/users", userController.addUser);
 router.get("/users/:id", userController.getDetailUser);
 router.put("/users/:id", userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
+router.put("/users/customer/:id", userController.updateInformationCustomer); //new router update information for customer
+
 
 // Services management
 router.get("/category", serviceController.getCategory);

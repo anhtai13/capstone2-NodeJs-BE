@@ -90,10 +90,28 @@ const deleteUser = (params, callback) => {
   }
 };
 
+
+const updateInformationCustomer = (id, userData, callback) => {
+  console.log("Updating user with ID:", id);
+  console.log("New user data:", userData);
+
+  userRepositories.updateInformationCustomer(id, userData, (err, result) => {
+    if (err) {
+      console.error("Error updating user in service:", err.message);
+      callback(err, null);
+    } else {
+      console.log("User updated successfully in service");
+      callback(null, result);
+    }
+  });
+};
+
+
 export default {
   searchUsers,
   addUser,
   getDetailUser,
   updateUser,
   deleteUser,
+  updateInformationCustomer,
 };
