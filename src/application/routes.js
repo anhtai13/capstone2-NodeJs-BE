@@ -11,6 +11,7 @@ const router = Router();
 //Authentication
 router.post("/login", authController.login);
 router.post("/logout", authController.logout);
+router.put("/changePassword/:id", changepasswordController.changePassword);
 
 // User management
 router.get("/users", userController.searchUsers);
@@ -19,6 +20,7 @@ router.get("/users/:id", userController.getDetailUser);
 router.put("/users/:id", userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
 router.put("/users/customer/:id", userController.updateInformationCustomer); //new router update information for customer
+
 
 
 // Services management
