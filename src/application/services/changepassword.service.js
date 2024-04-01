@@ -1,12 +1,13 @@
-import ChangePasswordController from "../controllers/changepassword.controller.js";
+import ChangePasswordReponsitories from "../repositories/changepassword.repositories.js";
+import bcrypt from "bcryptjs";
 
 const changePassword = (params, callback) => {
-  ChangePasswordController.changePassword(params, (err, result) => {
-    if (err) {
-      callback(err, null);
-    } else {
-      callback(null, result);
-    }
+  ChangePasswordReponsitories.changePassword(params, (err, result) => {
+      if (err) {
+          callback(err, null);
+      } else {
+          callback(null, result);
+      }
   });
 };
 

@@ -6,12 +6,16 @@ import orderController from "./controllers/order.controller.js";
 import orderDetailController from "./controllers/orderDetail.controller.js";
 import contactController from "./controllers/contact.controller.js";
 import uploadController from "./controllers/uploadFile.controller.js";
+import changepasswordController from "./controllers/changepassword.controller.js";
 
 const router = Router();
 
 //Authentication
 router.post("/login", authController.login);
 router.post("/logout", authController.logout);
+router.post("/loginEmployee", authController.login1);
+
+//Chanege Password Authentication
 router.put("/changePassword/:id", changepasswordController.changePassword);
 
 // User management
