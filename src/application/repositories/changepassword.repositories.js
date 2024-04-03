@@ -1,4 +1,5 @@
-import getConnection from "../../config/connection.database";
+import getConnection from "../../config/connection.database.js";
+import bcrypt from "bcryptjs";
 
 const connection = getConnection();
 const changePassword = (params, callback) => {
@@ -46,6 +47,7 @@ const changePassword = (params, callback) => {
     }
   );
 };
+
 export default {
   changePassword,
 };
