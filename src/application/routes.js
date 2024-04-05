@@ -7,7 +7,8 @@ import orderDetailController from "./controllers/orderDetail.controller.js";
 import contactController from "./controllers/contact.controller.js";
 import uploadController from "./controllers/uploadFile.controller.js";
 import changepasswordController from "./controllers/changepassword.controller.js";
-
+import forgotpasswordController from './controllers/forgotpassword.controller.js';
+import resetpasswordController from "./controllers/resetpassword.controller.js";
 const router = Router();
 
 //Authentication
@@ -17,7 +18,10 @@ router.post("/loginEmployee", authController.login1);
 
 //Chanege Password Authentication
 router.put("/changePassword/:id", changepasswordController.changePassword);
-
+//Forgot Password Authentication
+router.post("/forgotpassword", forgotpasswordController.forgotPassword);
+//Reset Password Authentication
+router.put("/resetpassword", resetpasswordController.resetPassword);
 // User management
 router.get("/users", userController.searchUsers);
 router.post("/users", userController.addUser);
