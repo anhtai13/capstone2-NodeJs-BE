@@ -39,6 +39,7 @@ router.post("/services", serviceController.addService);
 router.get("/services/:services_id", serviceController.getDetailService);
 router.put("/services", serviceController.updateService);
 router.delete("/services/:id", serviceController.deleteService);
+router.get("/services/search", serviceController.searchServices);
 
 // Order management
 router.get("/order", orderController.getListOrder);
