@@ -1,4 +1,5 @@
 import authService from "../services/auth.service.js";
+import { generateOTP } from "../../utils/otp.js";
 
 const login = (req, res) => {
   const userLogin = req.body;
@@ -39,24 +40,55 @@ const logout = (req, res) => {
   });
 };
 
-// const changePassword = (req, res) => {
-//     const { currentPassword, newPassword, confirmPassword } = req.body;
+const forgotPasswordApp = (req, res) => {
+  const { email } = req.body;
+  const otp = generateOTP();
 
-//     if (newPassword !== confirmPassword) {
-//         return res.status(400).json({ message: "Mật khẩu mới và xác nhận mật khẩu mới không khớp." });
-//     }
+  authService.forgotPasswordApp(email, otp, (err, result) => {
+    if (err) {
+      res.status(500).send({
+        errMessage: err.message,
+      });
+    } else {
+      res.status(200).send(result);
+    }
+  });
+};
 
-//     authService.changePassword(req.user.id, currentPassword, newPassword, (err, result) => {
-//         if (err) {
-//             return res.status(500).json({ message: "Đã xảy ra lỗi khi thay đổi mật khẩu.", error: err });
-//         }
-//         return res.status(200).json({ message: "Mật khẩu đã được thay đổi thành công." });
-//     });
-// };
+const changePasswordForgotApp = (req, res) => {
+  const { email, otp, newPassword, confirmPassword } = req.body;
+
+  if (newPassword !== confirmPassword) {
+    return res.status(400).send({
+      errMessage: "New password and confirm password do not match",
+    });
+  }
+
+  authService.verifyOTP(email, otp, (err, result) => {
+    if (err) {
+      return res.status(500).send({
+        errMessage: err.message,
+      });
+    }
+
+    authService.changePasswordApp(email, newPassword, (err, result) => {
+      if (err) {
+        return res.status(500).send({
+          errMessage: err.message,
+        });
+      }
+
+      res.status(200).send({
+        message: "Password changed successfully",
+      });
+    });
+  });
+};
 
 export default {
   login,
   logout,
-
   login1,
+  forgotPasswordApp,
+  changePasswordForgotApp,
 };

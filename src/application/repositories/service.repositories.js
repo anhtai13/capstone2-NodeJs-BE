@@ -36,7 +36,7 @@ const searchServices = (params, callback) => {
       callback({ message: "Something wrong!" }, null);
     } else {
       callback(null, results);
-    }
+    } 
   });
 };
 
