@@ -85,9 +85,9 @@ const deleteUser = (req, res) => {
 };
 
 
-const updateInformationCustomer = (req, res) => {     // thay đổi thông tin cá nhân customer
+const updateInformationCustomer = (req, res) => {   
   const { id } = req.params;
-  const userData = req.body; // Dữ liệu mới của người dùng
+  const userData = req.body; 
 
   console.log("Received request to update user with ID:", id);
   console.log("New user data:", userData);

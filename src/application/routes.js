@@ -7,7 +7,8 @@ import orderDetailController from "./controllers/orderDetail.controller.js";
 import contactController from "./controllers/contact.controller.js";
 import uploadController from "./controllers/uploadFile.controller.js";
 import changepasswordController from "./controllers/changepassword.controller.js";
-
+import forgotpasswordController from './controllers/forgotpassword.controller.js';
+import resetpasswordController from "./controllers/resetpassword.controller.js";
 const router = Router();
 
 //Authentication
@@ -15,12 +16,23 @@ router.post("/login", authController.login);
 router.post("/logout", authController.logout);
 router.post("/loginEmployee", authController.login1);
 
-//Chanege Password Authentication
+//Chanege Password Authentication No OTP
 router.put("/changePassword/:id", changepasswordController.changePassword);
 
-router.post("/forgotPassword", authController.forgotPasswordApp);
+//Forgot Password Authentication
+router.post("/forgotpassword", forgotpasswordController.forgotPassword);
 
-router.post('/changePasswordForgotApp', authController.changePasswordForgotApp);
+//Reset Password Authentication
+router.put("/resetpassword", resetpasswordController.resetPassword);
+
+//ForgotPassword App
+router.post("/forgotPasswordApp", authController.forgotPasswordApp);
+
+//ChangPassword App OTP
+router.post("/changePasswordForgotApp", authController.changePasswordForgotApp);
+
+//Resend Otp
+router.post("/resendOTP", authController.resendOTP);
 
 // User management
 router.get("/users", userController.searchUsers);
@@ -39,6 +51,7 @@ router.post("/services", serviceController.addService);
 router.get("/services/:services_id", serviceController.getDetailService);
 router.put("/services", serviceController.updateService);
 router.delete("/services/:id", serviceController.deleteService);
+router.get("/services/search", serviceController.searchServices);
 
 // Order management
 router.get("/order", orderController.getListOrder);

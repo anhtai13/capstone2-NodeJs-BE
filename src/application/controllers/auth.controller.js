@@ -85,10 +85,27 @@ const changePasswordForgotApp = (req, res) => {
   });
 };
 
+const resendOTP = (req, res) => {
+  const { email } = req.body;
+  const otp = generateOTP();
+
+  authService.resendOTP(email, otp, (err, result) => {
+    if (err) {
+      res.status(500).send({
+        errMessage: err.message,
+      });
+    } else {
+      res.status(200).send(result);
+    }
+  });
+};
+
+
 export default {
   login,
   logout,
   login1,
   forgotPasswordApp,
   changePasswordForgotApp,
+  resendOTP,
 };

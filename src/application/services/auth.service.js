@@ -67,6 +67,21 @@ const changePasswordApp = (email, newPassword, callback) => {
   });
 };
 
+const resendOTP = (email, otp, callback) => {
+  authRepositories.saveResendOTP(email, otp, (err, result) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      sendOTPByEmail(email, otp);
+      const response = {
+        message: "OTP resent successfully",
+        OTP: otp
+      };
+      callback(null, response);
+    }
+  });
+};
+
 export default {
   login,
   logout,
@@ -74,4 +89,5 @@ export default {
   forgotPasswordApp,
   verifyOTP,
   changePasswordApp,
+  resendOTP,
 };

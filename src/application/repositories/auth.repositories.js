@@ -255,6 +255,22 @@ const changePasswordApp = (email, newPassword, callback) => {
   });
 };
 
+const saveResendOTP = (email, otp, callback) => {
+  connection.query(
+    "UPDATE users SET otp = ? WHERE email = ?",
+    [otp, email],
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        callback({ message: "Something went wrong!" }, null);
+      } else {
+        callback(null, "OTP saved successfully");
+      }
+    }
+  );
+};
+
+
 export default {
   login,
   logout,
@@ -262,4 +278,5 @@ export default {
   forgotPasswordApp,
   verifyOTP,
   changePasswordApp,
+  saveResendOTP,
 };
