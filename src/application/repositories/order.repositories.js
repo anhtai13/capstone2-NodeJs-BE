@@ -100,7 +100,6 @@ const status_id = 1
           }
         );
       }
-    }
   });
 };
 
@@ -108,13 +107,8 @@ const status_id = 1
 
 const getDetailOrder = (params, callback) => {
   connection.query(
-<<<<<<< HEAD
     `SELECT orders.*, users.username, users.email, users.first_name, users.last_name FROM orders LEFT JOIN users ON orders.user_id = users.user_id WHERE orders.user_id = ?`,
     [+params.id],
-=======
-    `SELECT laundry_booking.orders.*, users.username,users.email,users.first_name,users.last_name FROM laundry_booking.orders left join users on orders.user_id=users.user_id where orders.user_id=?`,
-    [+params.id], 
->>>>>>> b9254f1b9898c1ecefbb5a46c52779668894ed1e
     (error, results, fields) => {
       if (error) {
         console.log(error);
