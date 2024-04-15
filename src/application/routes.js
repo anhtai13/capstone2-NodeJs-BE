@@ -19,21 +19,6 @@ router.post("/loginEmployee", authController.login1);
 //Chanege Password Authentication No OTP
 router.put("/changePassword/:id", changepasswordController.changePassword);
 
-//Forgot Password Authentication
-router.post("/forgotpassword", forgotpasswordController.forgotPassword);
-
-//Reset Password Authentication
-router.put("/resetpassword", resetpasswordController.resetPassword);
-
-//ForgotPassword App
-router.post("/forgotPasswordApp", authController.forgotPasswordApp);
-
-//ChangPassword App OTP
-router.post("/changePasswordForgotApp", authController.changePasswordForgotApp);
-
-//Resend Otp
-router.post("/resendOTP", authController.resendOTP);
-
 // User management
 router.get("/users", userController.searchUsers);
 router.post("/users", userController.addUser);
