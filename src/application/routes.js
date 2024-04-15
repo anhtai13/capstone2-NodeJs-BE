@@ -16,12 +16,24 @@ router.post("/login", authController.login);
 router.post("/logout", authController.logout);
 router.post("/loginEmployee", authController.login1);
 
-//Chanege Password Authentication
+//Chanege Password Authentication No OTP
 router.put("/changePassword/:id", changepasswordController.changePassword);
+
 //Forgot Password Authentication
 router.post("/forgotpassword", forgotpasswordController.forgotPassword);
+
 //Reset Password Authentication
 router.put("/resetpassword", resetpasswordController.resetPassword);
+
+//ForgotPassword App
+router.post("/forgotPasswordApp", authController.forgotPasswordApp);
+
+//ChangPassword App OTP
+router.post("/changePasswordForgotApp", authController.changePasswordForgotApp);
+
+//Resend Otp
+router.post("/resendOTP", authController.resendOTP);
+
 // User management
 router.get("/users", userController.searchUsers);
 router.post("/users", userController.addUser);
@@ -30,8 +42,8 @@ router.put("/users/:id", userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
 router.put("/users/customer/:id", userController.updateInformationCustomer); //new router update information for customer
 
-
 // Services management
+router.get("/services/search", serviceController.searchServices); // new router search services
 router.get("/category", serviceController.getCategory);
 router.get("/category/:category", serviceController.getServiceByCategory);
 router.get("/services", serviceController.getListServices);
@@ -44,7 +56,7 @@ router.get("/services/search", serviceController.searchServices);
 // Order management
 router.get("/order", orderController.getListOrder);
 router.get("/order_total/:id", orderController.getOrderTotalPrice);
-router.post("/order", orderController.addOrder);
+router.post("/order/addOrder", orderController.addOrder);
 router.get("/order/:id", orderController.getDetailOrder);
 router.get("/order_id/:id", orderController.getDetailOrderById);
 router.put("/order", orderController.updateOrder);

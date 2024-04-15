@@ -27,13 +27,13 @@ const getOrderTotalPrice = (req, res) => {
 
 const addOrder = (req, res) => {
   const newOrder = req.body;
-  orderService.addOrder(newOrder, (err, order) => {
+  orderService.addOrder(newOrder, (err, result) => {
     if (err) {
       res.status(500).send({
         errMessage: err.message,
       });
     } else {
-      res.status(200).send(order.message);
+      res.status(200).send(result);
     }
   });
 };

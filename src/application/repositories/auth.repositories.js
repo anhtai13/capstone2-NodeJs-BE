@@ -200,10 +200,83 @@ const logout = (params, callback) => {
   );
 };
 
+const forgotPasswordApp = (email, otp, callback) => {
+  connection.query(
+    "UPDATE users SET otp = ? WHERE email = ?",
+    [otp, email],
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        callback({ message: "Something went wrong!" }, null);
+      } else {
+        callback(null, "OTP updated successfully");
+      }
+    }
+  );
+};
+
+const verifyOTP = (email, otp, callback) => {
+  connection.query(
+    "SELECT * FROM users WHERE email = ? AND otp = ?",
+    [email, otp],
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        callback({ message: "Something went wrong!" }, null);
+      } else {
+        if (results.length > 0) {
+          callback(null, "OTP verified successfully");
+        } else {
+          callback({ message: "Invalid OTP" }, null);
+        }
+      }
+    }
+  );
+};
+
+const changePasswordApp = (email, newPassword, callback) => {
+  bcrypt.hash(newPassword, 10, (err, hashedPassword) => {
+    if (err) {
+      callback({ message: "Error hashing password" }, null);
+    } else {
+      connection.query(
+        "UPDATE users SET password = ? WHERE email = ?",
+        [hashedPassword, email],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+            callback({ message: "Something went wrong!" }, null);
+          } else {
+            callback(null, "Password changed successfully");
+          }
+        }
+      );
+    }
+  });
+};
+
+const saveResendOTP = (email, otp, callback) => {
+  connection.query(
+    "UPDATE users SET otp = ? WHERE email = ?",
+    [otp, email],
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        callback({ message: "Something went wrong!" }, null);
+      } else {
+        callback(null, "OTP saved successfully");
+      }
+    }
+  );
+};
+
+
 export default {
   login,
   logout,
-  // getUserById,
-  // updatePassword,
   login1,
+  forgotPasswordApp,
+  verifyOTP,
+  changePasswordApp,
+  saveResendOTP,
 };
