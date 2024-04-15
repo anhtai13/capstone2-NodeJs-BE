@@ -59,7 +59,7 @@ const addOrder = (params, callback) => {
 
 const getDetailOrder = (params, callback) => {
   connection.query(
-    `SELECT * FROM orders WHERE user_id=?`,
+    `SELECT orders.*, users.username, users.email, users.first_name, users.last_name FROM orders LEFT JOIN users ON orders.user_id = users.user_id WHERE orders.user_id = ?`,
     [+params.id],
     (error, results, fields) => {
       if (error) {
@@ -76,7 +76,7 @@ const getDetailOrder = (params, callback) => {
 
 const getDetailOrderById = (params, callback) => {
   connection.query(
-    `SELECT * FROM order_details WHERE order_id=?`,
+    `SELECT orders.*, order_details.*, services.* FROM order_details left join orders on orders.order_id=order_details.order_id left join services on order_details.service_id=services.service_id where orders.order_id=?`,
     [+params.id],
     (error, results, fields) => {
       if (error) {
@@ -88,7 +88,7 @@ const getDetailOrderById = (params, callback) => {
       }
     }
   );
-};
+}
 
 const updateOrder = (params, callback) => {
   connection.query(
