@@ -1,4 +1,5 @@
 import getConnection from "../../config/connection.database.js";
+import { randomString } from "../../utils/randomString.js";
 
 const connection = getConnection();
 
@@ -135,7 +136,7 @@ const addOrderDetails = (params, callback) => {
 
 const getDetailOrder = (params, callback) => {
   connection.query(
-    `SELECT * FROM orders WHERE user_id=?`,
+    `SELECT orders.*, users.username, users.email, users.first_name, users.last_name FROM orders LEFT JOIN users ON orders.user_id = users.user_id WHERE orders.user_id = ?`,
     [+params.id],
     (error, results, fields) => {
       if (error) {
@@ -167,7 +168,7 @@ const getDetailOrderByUserId = (params, callback) => {
       }
     }
   );
-};
+}
 
 
 const updateOrder = (params, callback) => {
