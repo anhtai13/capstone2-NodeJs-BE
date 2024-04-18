@@ -20,6 +20,16 @@ const getOrderTotalPrice = (params, callback) => {
   });
 };
 
+// const addOrder = (params, callback) => {
+//   orderRepositories.addOrder(params, (err, result) => {
+//     if (err) {
+//       callback(err, null);
+//     } else {
+//       callback(null, result);
+//     }
+//   });
+// };
+
 const addOrder = (params, callback) => {
   orderRepositories.addOrder(params, (err, result) => {
     if (err) {
@@ -29,6 +39,17 @@ const addOrder = (params, callback) => {
     }
   });
 };
+
+const addOrderDetails = (params, callback) => {
+  orderRepositories.addOrderDetails(params, (err, result) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, result);
+    }
+  });
+};
+
 
 const getDetailOrder = (params, callback) => {
   orderRepositories.getDetailOrder(params, (err, result) => {
@@ -40,8 +61,8 @@ const getDetailOrder = (params, callback) => {
   });
 };
 
-const getDetailOrderById = (params, callback) => {
-  orderRepositories.getDetailOrderById(params, (err, result) => {
+const getDetailOrderByUserId = (params, callback) => {
+  orderRepositories.getDetailOrderByUserId(params, (err, result) => {
     if (err) {
       callback(err, null);
     } else {
@@ -77,5 +98,6 @@ export default {
   updateOrder,
   deleteOrder,
   getOrderTotalPrice,
-  getDetailOrderById,
+  getDetailOrderByUserId,
+  addOrderDetails,
 };

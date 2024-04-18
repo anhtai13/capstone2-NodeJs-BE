@@ -1,7 +1,7 @@
 import orderService from "../services/order.service.js";
 
 const getListOrder = (req, res) => {
-  orderService.getListOrder("", (err, result) => {
+  orderService.getListOrder("No Data in database", (err, result) => {
     if (err) {
       res.status(500).send({
         errMessage: err.message,
@@ -25,6 +25,19 @@ const getOrderTotalPrice = (req, res) => {
   });
 };
 
+// const addOrder = (req, res) => {
+//   const newOrder = req.body;
+//   orderService.addOrder(newOrder, (err, result) => {
+//     if (err) {
+//       res.status(500).send({
+//         errMessage: err.message,
+//       });
+//     } else {
+//       res.status(200).send(result);
+//     }
+//   });
+// };
+
 const addOrder = (req, res) => {
   const newOrder = req.body;
   orderService.addOrder(newOrder, (err, result) => {
@@ -37,6 +50,21 @@ const addOrder = (req, res) => {
     }
   });
 };
+
+
+const addOrderDetails = (req, res) => {
+  const newOrderDetails = req.body;
+  orderService.addOrderDetails(newOrderDetails, (err, result) => {
+    if (err) {
+      res.status(500).send({
+        errMessage: err.message,
+      });
+    } else {
+      res.status(200).send(result);
+    }
+  });
+};
+
 
 const getDetailOrder = (req, res) => {
   const { id } = req.params;
@@ -51,9 +79,9 @@ const getDetailOrder = (req, res) => {
   });
 };
 
-const getDetailOrderById = (req, res) => {
+const getDetailOrderByUserId = (req, res) => {
   const { id } = req.params;
-  orderService.getDetailOrderById({ id }, (err, result) => {
+  orderService.getDetailOrderByUserId({ user_id: id }, (err, result) => {
     if (err) {
       res.status(500).send({
         error: err.message,
@@ -63,6 +91,7 @@ const getDetailOrderById = (req, res) => {
     }
   });
 };
+
 
 const updateOrder = (req, res) => {
   const orderUpdate = req.body;
@@ -99,5 +128,6 @@ export default {
   updateOrder,
   deleteOrder,
   getOrderTotalPrice,
-  getDetailOrderById,
+  getDetailOrderByUserId,
+  addOrderDetails,
 };

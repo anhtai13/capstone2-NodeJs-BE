@@ -140,7 +140,6 @@ const login1 = (params, callback) => {
     callback({ message: "Bạn hãy nhập đầy đủ thông tin để đăng nhập" }, null);
     return;
   }
-
   connection.query(
     "SELECT * FROM users WHERE username = ?",
     [params.username],
@@ -244,7 +243,6 @@ const changePasswordApp = (email, newPassword, callback) => {
         [hashedPassword, email],
         (error, results) => {
           if (error) {
-            console.log(error);
             callback({ message: "Something went wrong!" }, null);
           } else {
             callback(null, "Password changed successfully");

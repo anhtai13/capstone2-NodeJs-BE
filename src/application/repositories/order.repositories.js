@@ -3,13 +3,17 @@ import getConnection from "../../config/connection.database.js";
 const connection = getConnection();
 
 const getListOrder = (params, callback) => {
-  connection.query(`SELECT * FROM order_details`, (error, results) => {
-    if (error) {
-      callback({ message: "Something wrong!" }, null);
-    } else {
-      callback(null, results);
+  connection.query(
+    `SELECT * FROM orders
+     INNER JOIN order_details ON orders.order_id = order_details.order_id`,
+    (error, results) => {
+      if (error) {
+        callback({ message: "Something wrong!" }, null);
+      } else {
+        callback(null, results);
+      }
     }
-  });
+  );
 };
 
 const getOrderTotalPrice = (params, callback) => {
@@ -46,15 +50,87 @@ const getOrderTotalPrice = (params, callback) => {
 };
 
 const addOrder = (params, callback) => {
-  connection.query('insert into orders SET ?', params, (error, results) => {
+  const randomNumber = Math.floor(Math.random() * 10000000000);
+  const serialNumber = randomNumber.toString().padStart(10, '0');
+  connection.query(
+    `SELECT user_id FROM users`,
+    (userError, userResults) => {
+      if (userError) {
+        console.log(userError);
+        callback({ message: "Error fetching user information" }, null);
+        return;
+      }
+      if (userResults.length === 0) {
+        callback({ message: "User not found" }, null);
+        return;
+      }
+      const user_id = params.user_id;
+      const status_id = 1;
+      connection.query(
+        `INSERT INTO orders (serial_number, user_id, order_at, total_price, status_id, created_at, created_by_id) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [
+          serialNumber,
+          user_id,
+          new Date(),
+          params.total_price,
+          status_id,
+          new Date(),
+          params.created_by_id,
+        ],
+        (orderError, orderResults) => {
+          if (orderError) {
+            console.log(orderError);
+            callback({ message: "Error inserting order" }, null);
+            return;
+          }
+          const lastIdInsert = orderResults.insertId;
+          const formattedWorkDate = params.work_date.split('/').reverse().join('-');
+          connection.query(
+            `INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, name_service) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+              lastIdInsert,
+              params.phone_number,
+              params.service_id,
+              params.note,
+              params.unit_price,
+              params.sub_total_price,
+              params.address_order,
+              params.area,
+              formattedWorkDate,
+              params.start_time,
+              params.full_name,
+              params.housetype,
+              params.name_service,
+            ],
+            (detailError, detailResults) => {
+              if (detailError) {
+                console.log(detailError);
+                callback({ message: "Error inserting order details" }, null);
+                return;
+              }
+              callback(null, { message: "Successfully ordered!" });
+            }
+          );
+        }
+      );
+    }
+  );
+};
+
+
+const addOrderDetails = (params, callback) => {
+  connection.query('insert into order_details SET ?', params, (error, results) => {
     if (error) {
       callback(error, null);
     } else {
-      callback(null, { message: 'Order added successfully!' });
+      if (results.affectedRows > 0) {
+        callback(null, { message: 'Order details added successfully!' });
+      } else {
+        callback({ message: 'Failed to add order details' }, null);
+      }
     }
   });
 };
-
 
 
 const getDetailOrder = (params, callback) => {
@@ -74,21 +150,25 @@ const getDetailOrder = (params, callback) => {
   );
 };
 
-const getDetailOrderById = (params, callback) => {
+const getDetailOrderByUserId = (params, callback) => {
   connection.query(
-    `SELECT * FROM order_details WHERE order_id=?`,
-    [+params.id],
+    `SELECT orders.*, order_details.*
+     FROM orders
+     INNER JOIN order_details ON orders.order_id = order_details.order_id
+     WHERE orders.user_id = ?`,
+    [+params.user_id],
     (error, results, fields) => {
       if (error) {
         callback({ message: "Something wrong!" }, null);
       } else if (results.length == 0) {
-        callback({ message: "Order not found!" }, null);
+        callback({ message: "Orders not found!" }, null);
       } else {
         callback(null, results);
       }
     }
   );
 };
+
 
 const updateOrder = (params, callback) => {
   connection.query(
@@ -171,5 +251,6 @@ export default {
   updateOrder,
   deleteOrder,
   getOrderTotalPrice,
-  getDetailOrderById,
+  getDetailOrderByUserId,
+  addOrderDetails,
 };
