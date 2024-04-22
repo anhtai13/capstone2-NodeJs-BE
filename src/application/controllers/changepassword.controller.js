@@ -1,9 +1,14 @@
 import ChangePasswordService from "../services/changepassword.service.js";
-import bcrypt from "bcryptjs";
 
 const changePassword = (req, res) => {
     const user_id = req.params.id;
     const { oldPassword, newPassword } = req.body;
+
+    if (oldPassword === newPassword) {
+        return res.status(400).send({
+            errMessage: "New password must be different from old password."
+        });
+    }
 
     ChangePasswordService.changePassword({ user_id, oldPassword, newPassword }, (err, result) => {
         if (err) {
@@ -15,7 +20,6 @@ const changePassword = (req, res) => {
         }
     });
 };
-
 
 export default {
     changePassword,
