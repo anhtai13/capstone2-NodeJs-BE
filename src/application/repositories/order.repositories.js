@@ -87,7 +87,7 @@ const addOrder = (params, callback) => {
           const lastIdInsert = orderResults.insertId;
           const formattedWorkDate = params.work_date.split('/').reverse().join('-');
           connection.query(
-            `INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, name_service) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, name_service,estimated_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
             [
               lastIdInsert,
               params.phone_number,
@@ -102,6 +102,7 @@ const addOrder = (params, callback) => {
               params.full_name,
               params.housetype,
               params.name_service,
+              params.estimated_time,
             ],
             (detailError, detailResults) => {
               if (detailError) {

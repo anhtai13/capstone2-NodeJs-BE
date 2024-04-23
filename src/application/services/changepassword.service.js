@@ -1,16 +1,15 @@
-import ChangePasswordReponsitories from "../repositories/changepassword.repositories.js";
-
+import ChangePasswordRepositories from "../repositories/changepassword.repositories.js";
 
 const changePassword = (params, callback) => {
-  ChangePasswordReponsitories.changePassword(params, (err, result) => {
-      if (err) {
-          callback(err, null);
-      } else {
-          callback(null, result);
-      }
-  });
+    ChangePasswordRepositories.changePassword(params, (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
+    });
 };
 
 export default {
-  changePassword,
+    changePassword,
 };
