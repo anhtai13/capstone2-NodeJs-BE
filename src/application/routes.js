@@ -72,7 +72,7 @@ router.put("/order", orderController.updateOrder);
 router.delete("/order/:id", orderController.deleteOrder);
 
 // Order Details management
-router.get("/order_details/:id", orderDetailController.getListOrderDetail);
+router.get("/order_details/", orderDetailController.getListOrderDetail);
 
 // router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 
