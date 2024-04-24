@@ -50,20 +50,20 @@ const addOrder = (params, callback) => {
   // Generate a random 10-digit serial number
   const randomNumber = Math.floor(Math.random() * 10000000000); // Ensures 10 digits
   const serialNumber = randomNumber.toString().padStart(10, '0'); // Pad with zeros if needed
-const user_id = 1
-const status_id = 1
+  // const user_id = 1;
+  // const status_id = 1;
+
   //add data vào bảng orders
   connection.query(
     `insert into orders (serial_number,user_id,order_at,total_price,status_id,created_at,created_by_id) values (?,?,?,?,?,?,?)`,
     [
       serialNumber,
-      user_id,
+      params.user_id,
       new Date(),
       params.total_price,
-      status_id,
+      params.status_id,
       new Date(),
       params.created_by_id,
-    
     ],
     (error, results) => {
       if (error) {
@@ -93,7 +93,7 @@ const status_id = 1
           (err, result) => {
             if (err) {
               console.log(err);
-              callback(err, null);
+              callback({ message: "Something wrong!" }, null);
             } else {
               callback(null, { message: "Thành công đặt đơn hàng!" });
             }
@@ -101,9 +101,8 @@ const status_id = 1
         );
       }
     }
-  });
+  );
 };
-
 
 
 const getDetailOrder = (params, callback) => {
