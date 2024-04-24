@@ -154,10 +154,12 @@ const getDetailOrder = (params, callback) => {
 
 const getDetailOrderByUserId = (params, callback) => {
   connection.query(
-    `SELECT orders.*, order_details.*
-     FROM orders
-     INNER JOIN order_details ON orders.order_id = order_details.order_id
-     WHERE orders.user_id = ?`,
+    `SELECT od.*,o.*,s.*,u.* 
+    FROM order_details
+    AS od JOIN orders
+    AS o ON od.order_id = o.order_id JOIN services 
+    AS s ON od.service_id = s.service_id JOIN users 
+    AS u ON o.user_id = u.user_id`,
     [+params.user_id],
     (error, results, fields) => {
       if (error) {
