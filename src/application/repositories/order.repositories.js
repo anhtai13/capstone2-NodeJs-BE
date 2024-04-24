@@ -176,7 +176,12 @@ const getDetailOrderByUserId = (params, callback) => {
 
 const updateOrder = (params, callback) => {
   connection.query(
-    `SELECT * FROM orders WHERE order_id=?`,
+    `SELECT od.*, o.*, s.*, u.* 
+     FROM order_details AS od 
+     JOIN orders AS o ON od.order_id = o.order_id 
+     JOIN services AS s ON od.service_id = s.service_id 
+     JOIN users AS u ON o.user_id = u.user_id 
+     WHERE o.order_id=?`,
     [params.order_id],
     (error, results, fields) => {
       if (error) {
@@ -185,7 +190,9 @@ const updateOrder = (params, callback) => {
         callback({ message: "Order not found!" }, null);
       } else {
         connection.query(
-          `UPDATE orders SET serial_number=?,user_id=?,order_at=?,total_price=?,status_id=?,created_at=?,created_by_id=?,code=? WHERE order_id=?`,
+          `UPDATE orders 
+           SET serial_number=?, user_id=?, order_at=?, total_price=?, status_id=?, created_at=?, created_by_id=?, code=? 
+           WHERE order_id=?`,
           [
             params.serial_number,
             params.user_id,
