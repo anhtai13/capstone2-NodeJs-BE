@@ -3,7 +3,7 @@ import getConnection from "../../config/connection.database.js";
 const connection = getConnection();
 
 const getListOrderDetail = (params, callback) => {
-    connection.query(`SELECT * from orders left join order_details on orders.order_id=order_details.order_id where user_id=?`, [params], (error, results) => {
+    connection.query(`SELECT od.*,o.*,s.*,u.* FROM order_details AS od JOIN orders AS o ON od.order_id = o.order_id JOIN services AS s ON od.service_id = s.service_id JOIN users AS u ON o.user_id = u.user_id`, [params], (error, results) => {
         if (error) {
             callback({ message: "Something wrong!" }, null);
         }
@@ -15,7 +15,7 @@ const getListOrderDetail = (params, callback) => {
 
 const getOrderDetailById = (params, callback) => {
     console.log(params)
-    connection.query(`SELECT * from order_details where order_id`, [params], (error, results) => {
+    connection.query(`SELECT od.*,o.*,s.*,u.* FROM order_details AS od JOIN orders AS o ON od.order_id = o.order_id JOIN services AS s ON od.service_id = s.service_id JOIN users AS u ON o.user_id = u.user_id`, [params], (error, results) => {
         if (error) {
             callback({ message: "Something wrong!" }, null);
         }

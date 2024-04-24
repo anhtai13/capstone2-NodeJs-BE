@@ -1,6 +1,8 @@
 import authRepositories from "../repositories/auth.repositories.js";
 import bcrypt from "bcryptjs";
 import { sendOTPByEmail } from "../../utils/email.js";
+import getConnection from "../../config/connection.database.js";
+const connection = getConnection();
 
 const login = (params, callback) => {
   authRepositories.login(params, (err, result) => {
@@ -58,14 +60,48 @@ const verifyOTP = (email, otp, callback) => {
 };
 
 const changePasswordApp = (email, newPassword, callback) => {
-  authRepositories.changePasswordApp(email, newPassword, (err, result) => {
-    if (err) {
-      callback(err, null);
-    } else {
-      callback(null, "Password changed successfully");
+  connection.query(
+    "SELECT * FROM users WHERE email = ?",
+    [email],
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        callback({ message: "Something went wrong!" }, null);
+      } else {
+        if (results.length === 0) {
+          callback({ message: "User not found" }, null);
+        } else {
+          bcrypt.compare(newPassword, results[0].password, (err, passwordMatch) => {
+            if (passwordMatch) {
+              callback({ message: "New password cannot be the same as the current password" }, null);
+            } else {
+              bcrypt.hash(newPassword, 10, (err, hashedPassword) => {
+                if (err) {
+                  callback({ message: "Error hashing password" }, null);
+                } else {
+                  connection.query(
+                    "UPDATE users SET password = ? WHERE email = ?",
+                    [hashedPassword, email],
+                    (error, updateResults) => {
+                      if (error) {
+                        console.log(error);
+                        callback({ message: "Something went wrong!" }, null);
+                      } else {
+                        callback(null, "Password changed successfully");
+                      }
+                    }
+                  );
+                }
+              });
+            }
+          });
+        }
+      }
     }
-  });
+  );
 };
+
+
 
 const resendOTP = (email, otp, callback) => {
   authRepositories.saveResendOTP(email, otp, (err, result) => {

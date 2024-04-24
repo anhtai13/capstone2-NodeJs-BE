@@ -78,17 +78,16 @@ const searchUsers = (params, callback) => {
 const addUser = (params, callback) => {
   const hashedPassword = bcrypt.hashSync(params.password, salt);
   connection.query(
-    "SELECT * FROM users WHERE username = ?",
-    [params.username],
-    (err, results) => {
+    "SELECT * FROM users WHERE email = ?",
+    [params.email],
+    (err, emailResults) => {
       if (err) {
-        callback({ message: "Something wrong!" }, null);
-      }
-      if (results.length > 0) {
-        callback({ message: "Username đã tồn tại" }, null);
+        callback({ message: "Something went wrong!" }, null);
+      } else if (emailResults.length > 0) {
+        callback({ message: "Email already exists" }, null);
       } else {
         connection.query(
-          "insert into users (username,email,password,first_name,last_name,role,avatar,created_at,updated_at,created_by_id,updated_by_id,api_key,status,address_user,phone_number) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+          "INSERT INTO users (username,email,password,first_name,last_name,role,avatar,created_at,updated_at,created_by_id,updated_by_id,api_key,status,address_user,phone_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
           [
             params.username,
             params.email,
@@ -110,7 +109,7 @@ const addUser = (params, callback) => {
             if (err) {
               callback({ message: "Something went wrong!" }, null);
             } else {
-              callback(null, results, { message: "Succesfull!!!!!!" });
+              callback(null, results, { message: "Successful!" });
             }
           }
         );
@@ -118,6 +117,7 @@ const addUser = (params, callback) => {
     }
   );
 };
+
 
 const getDetailUser = (params, callback) => {
   connection.query(
@@ -148,7 +148,7 @@ const updateUser = async (params, callback) => {
       } else if (params.userUpdate.password.length < 1) {
         connection.query(
           "update users set username=? , email=? , first_name=? , last_name=? , role=? , avatar=? , address_user=? , phone_number=? ,created_at=? , updated_at=? , created_by_id=? , updated_by_id=?  where user_id=?",
-          [ 
+          [
             params.userUpdate.username,
             params.userUpdate.email,
             params.userUpdate.first_name,

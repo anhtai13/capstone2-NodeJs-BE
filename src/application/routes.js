@@ -54,17 +54,27 @@ router.delete("/services/:id", serviceController.deleteService);
 router.get("/services/search", serviceController.searchServices);
 
 // Order management
-router.get("/order", orderController.getListOrder);
+router.get("/order", orderController.getListOrder); // get list order 
 router.get("/order_total/:id", orderController.getOrderTotalPrice);
+
+
 router.post("/order/addOrder", orderController.addOrder);
+
+// add order_details
+router.post("/order/addOrder_details", orderController.addOrderDetails);
+
 router.get("/order/:id", orderController.getDetailOrder);
-router.get("/order_id/:id", orderController.getDetailOrderById);
+
+// get detail order and orders from user_id
+router.get("/order_id/:id", orderController.getDetailOrderByUserId);
+
 router.put("/order", orderController.updateOrder);
 router.delete("/order/:id", orderController.deleteOrder);
 
 // Order Details management
-router.post("/order_details", orderDetailController.getListOrderDetail);
-router.get("/order_details/:id", orderDetailController.getOrderDetailById);
+router.get("/order_details/", orderDetailController.getListOrderDetail);
+
+// router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 
 // Contact management
 router.get("/contact", contactController.getListContact);
