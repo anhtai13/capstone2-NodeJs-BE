@@ -74,7 +74,7 @@ router.delete("/order/:id", orderController.deleteOrder);
 // Order Details management
 router.get("/order_details/", orderDetailController.getListOrderDetail);
 
-// router.get("/order_details/:id", orderDetailController.getOrderDetailById);
+router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 
 // Contact management
 router.get("/contact", contactController.getListContact);
