@@ -14,7 +14,7 @@ const getListOrderDetail = (req, res) => {
 }
 
 const getOrderDetailById = (req, res) => {
-    const id = req.body.id
+    const id = req.params.id
     orderDetailServices.getOrderDetailById(id, (err, result) => {
         if (err) {
             res.status(500).send({
