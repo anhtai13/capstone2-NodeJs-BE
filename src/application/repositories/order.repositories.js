@@ -52,7 +52,7 @@ const getOrderTotalPrice = (params, callback) => {
 
 const addOrder = (params, callback) => {
   const randomNumber = Math.floor(Math.random() * 10000000000);
-  const serialNumber = randomNumber.toString().padStart(10, '0');
+  const serialNumber = randomNumber.toString().padStart(5, '0');
   connection.query(
     `SELECT user_id FROM users`,
     (userError, userResults) => {
@@ -131,7 +131,7 @@ const addOrderDetails = (params, callback) => {
         callback({ message: 'Failed to add order details' }, null);
       }
     }
-  );
+});
 };
 
 
