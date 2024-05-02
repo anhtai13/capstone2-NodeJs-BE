@@ -73,12 +73,12 @@ router.put("/order", orderController.updateOrder);
 router.delete("/order/:id", orderController.deleteOrder);
 
 // Order Details management
-router.get("/order_details/", orderDetailController.getListOrderDetail);
+router.get("/order_details", orderDetailController.getListOrderDetail);
 
 router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 
 // Employee And Order Details management
-router.get("/employee_and_order/", employeeCodeController.getListEmployeeAndOrder);
+router.get("/employee_and_order", employeeCodeController.getListEmployeeAndOrder);
 
 // Contact management
 router.get("/contact", contactController.getListContact);
