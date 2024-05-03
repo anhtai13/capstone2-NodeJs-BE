@@ -33,6 +33,7 @@ const getServiceByCategory = (params, callback) => {
     }
   });
 };
+
 const getCategory = (params, callback) => {
   serviceRepositories.getCategory(params, (err, result) => {
     if (err) {
@@ -45,19 +46,19 @@ const getCategory = (params, callback) => {
 
 // hàm add dịch vụ
 const addService = (params, callback) => {
-    if (!params.name_service && !params.unit_price) {
-        callback({ message: "Please complete all information" }, null);
-      }
-    else if (!params.name_service) {
+  if (!params.name_service && !params.unit_price) {
+    callback({ message: "Please complete all information" }, null);
+  }
+  else if (!params.name_service) {
     callback({ message: "Error: Please enter a service name" }, null);
   } else if (!params.unit_price) {
     callback({ message: "Error: Please enter service price" }, null);
   } else if (!validatePrice(params.unit_price)) {
     callback(
       {
-        message:"Error: Amount cannot be negative. Please enter a valid amount",
-      },null);
-  }else{
+        message: "Error: Amount cannot be negative. Please enter a valid amount",
+      }, null);
+  } else {
     serviceRepositories.addService(params, (err, result) => {
       if (err) {
         callback(err, null);
@@ -118,6 +119,16 @@ const deleteService = (params, callback) => {
   }
 };
 
+const searchOrderDetailsServices = (params, callback) => {
+  serviceRepositories.searchOrderDetailsServices(params, (err, result) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, result);
+    }
+  });
+};
+
 export default {
   searchServices,
   getListServices,
@@ -127,4 +138,5 @@ export default {
   getDetailService,
   updateService,
   deleteService,
+  searchOrderDetailsServices,
 };

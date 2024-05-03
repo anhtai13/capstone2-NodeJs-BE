@@ -36,7 +36,24 @@ const searchServices = (params, callback) => {
       callback({ message: "Something wrong!" }, null);
     } else {
       callback(null, results);
-    } 
+    }
+  });
+};
+
+const searchOrderDetailsServices = (params, callback) => {
+  const keyword = params.keyword;
+  const query = `
+  SELECT od.*, o.*
+  FROM order_details od
+  INNER JOIN orders o ON od.order_id = o.order_id
+  WHERE od.name_service LIKE '%${keyword}%'
+  `;
+  connection.query(query, (error, results) => {
+    if (error) {
+      callback({ message: "Something wrong!" }, null);
+    } else {
+      callback(null, results);
+    }
   });
 };
 
@@ -174,6 +191,7 @@ const deleteService = (params, callback) => {
 };
 
 export default {
+  searchOrderDetailsServices,
   searchServices,
   getListServices,
   getCategory,

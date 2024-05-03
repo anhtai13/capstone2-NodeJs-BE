@@ -68,7 +68,7 @@ const addOrder = (params, callback) => {
       const user_id = params.user_id;
       const status_id = 1;
       connection.query(
-        `INSERT INTO orders (serial_number, user_id, order_at, total_price, status_id, created_at, created_by_id) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO orders (serial_number, user_id, order_at, total_price, status_id, created_at, created_by_id, txn_ref, amount, order_infor, status, vnp_ResponseCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           serialNumber,
           user_id,
@@ -77,6 +77,11 @@ const addOrder = (params, callback) => {
           status_id,
           new Date(),
           params.created_by_id,
+          params.txn_ref,
+          params.amount,
+          params.order_infor,
+          params.status,
+          params.vnp_ResponseCode,
         ],
         (orderError, orderResults) => {
           if (orderError) {
@@ -87,7 +92,7 @@ const addOrder = (params, callback) => {
           const lastIdInsert = orderResults.insertId;
           const formattedWorkDate = params.work_date.split('/').reverse().join('-');
           connection.query(
-            `INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, name_service,estimated_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
+            `INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, name_service, estimated_time, vnp_ResponseCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
               lastIdInsert,
               params.phone_number,
@@ -103,6 +108,7 @@ const addOrder = (params, callback) => {
               params.housetype,
               params.name_service,
               params.estimated_time,
+              params.vnp_ResponseCode,
             ],
             (detailError, detailResults) => {
               if (detailError) {

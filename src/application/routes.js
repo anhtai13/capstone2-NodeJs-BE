@@ -42,6 +42,9 @@ router.put("/users/:id", userController.updateUser);
 router.delete("/users/:id", userController.deleteUser);
 router.put("/users/customer/:id", userController.updateInformationCustomer); //new router update information for customer
 
+//Search History Employee
+router.get("/services/searchOrderDetailServices", serviceController.searchOrderDetailsServices); 
+
 // Services management
 router.get("/services/search", serviceController.searchServices); // new router search services
 router.get("/category", serviceController.getCategory);
@@ -51,7 +54,7 @@ router.post("/services", serviceController.addService);
 router.get("/services/:services_id", serviceController.getDetailService);
 router.put("/services", serviceController.updateService);
 router.delete("/services/:id", serviceController.deleteService);
-router.get("/services/search", serviceController.searchServices);
+// router.get("/services/search", serviceController.searchServices);
 
 // Order management
 router.get("/order", orderController.getListOrder); // get list order 
@@ -75,6 +78,7 @@ router.delete("/order/:id", orderController.deleteOrder);
 router.get("/order_details/:id", orderDetailController.getListOrderDetail);
 
 // router.get("/order_details/:id", orderDetailController.getOrderDetailById);
+
 
 // Contact management
 router.get("/contact", contactController.getListContact);
