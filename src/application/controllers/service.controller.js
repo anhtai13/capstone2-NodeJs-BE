@@ -66,7 +66,7 @@ const addService = (req, res) => {
 
 const getDetailService = (req, res) => {
     const { service_id } = req.params;
-    Service.getDetailService({  }, (err, result) => {
+    Service.getDetailService({}, (err, result) => {
         if (err) {
             res.status(500).send({
                 error: err.message
@@ -107,6 +107,19 @@ const deleteService = (req, res) => {
     })
 }
 
+const searchOrderDetailsServices = (req, res) => {
+    const keyword = req.query.keyword;
+    Service.searchOrderDetailsServices({ keyword }, (err, result) => {
+      if (err) {
+        res.status(500).send({
+          errMessage: err.message
+        });
+      } else {
+        res.status(200).send(result);
+      }
+    })
+  };
+
 export default {
     searchServices,
     getListServices,
@@ -115,5 +128,6 @@ export default {
     addService,
     getDetailService,
     updateService,
-    deleteService
+    deleteService,
+    searchOrderDetailsServices,
 }
