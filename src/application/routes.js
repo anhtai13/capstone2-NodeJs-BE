@@ -9,6 +9,7 @@ import uploadController from "./controllers/uploadFile.controller.js";
 import changepasswordController from "./controllers/changepassword.controller.js";
 import forgotpasswordController from './controllers/forgotpassword.controller.js';
 import resetpasswordController from "./controllers/resetpassword.controller.js";
+import employeeCodeController from "./controllers/employeeCode.controller.js";
 const router = Router();
 
 //Authentication
@@ -75,9 +76,12 @@ router.put("/order", orderController.updateOrder);
 router.delete("/order/:id", orderController.deleteOrder);
 
 // Order Details management
-router.get("/order_details/:id", orderDetailController.getListOrderDetail);
+router.get("/order_details", orderDetailController.getListOrderDetail);
 
-// router.get("/order_details/:id", orderDetailController.getOrderDetailById);
+router.get("/order_details/:id", orderDetailController.getOrderDetailById);
+
+// Employee And Order Details management
+router.get("/employee_and_order", employeeCodeController.getListEmployeeAndOrder);
 
 
 // Contact management

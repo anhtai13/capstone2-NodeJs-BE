@@ -52,7 +52,7 @@ const getOrderTotalPrice = (params, callback) => {
 
 const addOrder = (params, callback) => {
   const randomNumber = Math.floor(Math.random() * 10000000000);
-  const serialNumber = randomNumber.toString().padStart(10, '0');
+  const serialNumber = randomNumber.toString().padStart(5, '0');
   connection.query(
     `SELECT user_id FROM users`,
     (userError, userResults) => {
@@ -137,7 +137,7 @@ const addOrderDetails = (params, callback) => {
         callback({ message: 'Failed to add order details' }, null);
       }
     }
-  });
+});
 };
 
 
@@ -160,10 +160,12 @@ const getDetailOrder = (params, callback) => {
 
 const getDetailOrderByUserId = (params, callback) => {
   connection.query(
-    `SELECT orders.*, order_details.*
-     FROM orders
-     INNER JOIN order_details ON orders.order_id = order_details.order_id
-     WHERE orders.user_id = ?`,
+    `SELECT od.*,o.*,s.*,u.* 
+    FROM order_details
+    AS od JOIN orders
+    AS o ON od.order_id = o.order_id JOIN services 
+    AS s ON od.service_id = s.service_id JOIN users 
+    AS u ON o.user_id = u.user_id`,
     [+params.user_id],
     (error, results, fields) => {
       if (error) {
@@ -179,26 +181,29 @@ const getDetailOrderByUserId = (params, callback) => {
 
 
 const updateOrder = (params, callback) => {
+  const currentDate = new Date();
+  const formattedDate = currentDate.toISOString().replace('T', ' ').replace(/\.\d{3}Z/, '');
   connection.query(
-    `SELECT * FROM orders WHERE order_id=?`,
+    `SELECT od.*, o.*, s.*, u.* 
+     FROM order_details AS od 
+     JOIN orders AS o ON od.order_id = o.order_id 
+     JOIN services AS s ON od.service_id = s.service_id 
+     JOIN users AS u ON o.user_id = u.user_id
+     WHERE o.order_id = ?`,
     [params.order_id],
     (error, results, fields) => {
       if (error) {
         callback({ message: "Something wrong!" }, null);
-      } else if (results.length == 0) {
+      } else if (results.length === 0) {
         callback({ message: "Order not found!" }, null);
       } else {
         connection.query(
-          `UPDATE orders SET serial_number=?,user_id=?,order_at=?,total_price=?,status_id=?,created_at=?,created_by_id=?,code=? WHERE order_id=?`,
+          `UPDATE orders AS o JOIN order_details AS od ON o.order_id = od.order_id SET o.order_at=?,o.status_id=?,o.created_at=?,od.employee_code=? WHERE o.order_id = ?`,
           [
-            params.serial_number,
-            params.user_id,
-            new Date().toString(),
-            params.total_price,
+            formattedDate,
             params.status_id,
-            new Date().toString(),
-            params.created_by_id,
-            "",
+            formattedDate,
+            params.employee_code,
             params.order_id,
           ],
           (err, results) => {
