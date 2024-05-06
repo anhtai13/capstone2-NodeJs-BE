@@ -20,5 +20,23 @@ const getListEmployeeAndOrder = (params, callback) => {
     }
   );
 };
-
-export default { getListEmployeeAndOrder };
+// lấy danh sách các nhân viên có tổng tiền nợ
+const getListEmployeeReceipt = (params, callback) => {
+  connection.query(
+    `SELECT u.*, SUM(od.unit_price) AS sum_total
+    FROM emoloyee_debt ed
+    JOIN order_details od ON ed.order_detail_id = od.order_detail_id
+    JOIN users u ON od.employee_code = u.user_id
+    WHERE od.responeCode IS NULL AND u.role = 3
+    GROUP BY u.user_id;`,
+    [params],
+    (error, results) => {
+      if (error) {
+        callback({ message: "Something wrong!" }, null);
+      } else {
+        callback(null, results);
+      }
+    }
+  );
+};
+export default { getListEmployeeAndOrder,getListEmployeeReceipt };
