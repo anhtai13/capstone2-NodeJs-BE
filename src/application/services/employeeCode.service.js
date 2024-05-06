@@ -1,6 +1,6 @@
 import employeeCodeRepositories from "../repositories/employeeCode.repositories.js";
 
-const getListEmployeeAndOrder = (params, callback) => {
+const getListEmployeeAndOrderService = (params, callback) => {
     employeeCodeRepositories.getListEmployeeAndOrder(params, (err, result) => {
         if (err) {
             callback(err, null);
@@ -10,4 +10,4 @@ const getListEmployeeAndOrder = (params, callback) => {
     });
 }
 
-export default { getListEmployeeAndOrder }
+export default { getListEmployeeAndOrderService }; // Sửa thành export đúng cách

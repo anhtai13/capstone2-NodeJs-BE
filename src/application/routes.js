@@ -83,7 +83,6 @@ router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 // Employee And Order Details management
 router.get("/employee_and_order", employeeCodeController.getListEmployeeAndOrder);
 
-
 // Contact management
 router.get("/contact", contactController.getListContact);
 router.get("/contact/:id", contactController.getDetailContact);
