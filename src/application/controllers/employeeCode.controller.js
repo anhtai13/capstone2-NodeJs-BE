@@ -12,7 +12,20 @@ const getListEmployeeAndOrder = (req, res) => {
         }
     })
 }
-
+// lấy danh sách các nhân viên có tổng tiền nợ
+const getListEmployeeReceipt = (req, res) => {
+    const id = req.body.id
+    employeeCodeService.getListEmployeeReceipt(id, (err, result) => {
+        if (err) {
+            res.status(500).send({
+                errMessage: err.message
+            });
+        } else {
+            res.status(200).send(result);
+        }
+    })
+}
 export default {
-    getListEmployeeAndOrder
+    getListEmployeeAndOrder,
+    getListEmployeeReceipt
 }

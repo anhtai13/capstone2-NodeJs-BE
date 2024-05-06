@@ -9,5 +9,14 @@ const getListEmployeeAndOrder = (params, callback) => {
         }
     });
 }
-
-export default { getListEmployeeAndOrder }
+// lấy danh sách các nhân viên có tổng tiền nợ
+const getListEmployeeReceipt = (params, callback) => {
+    employeeCodeRepositories.getListEmployeeReceipt(params, (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
+    });
+}
+export default { getListEmployeeAndOrder,getListEmployeeReceipt }
