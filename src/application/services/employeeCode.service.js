@@ -9,10 +9,6 @@ const getListEmployeeAndOrderService = (params, callback) => {
         }
     });
 }
-<<<<<<< HEAD
-
-export default { getListEmployeeAndOrderService }; // Sửa thành export đúng cách
-=======
 // lấy danh sách các nhân viên có tổng tiền nợ
 const getListEmployeeReceipt = (params, callback) => {
     employeeCodeRepositories.getListEmployeeReceipt(params, (err, result) => {
@@ -23,5 +19,5 @@ const getListEmployeeReceipt = (params, callback) => {
         }
     });
 }
-export default { getListEmployeeAndOrder,getListEmployeeReceipt }
->>>>>>> 028148a9109c369f57eb51ce8b479a6732a88d35
+
+export default { getListEmployeeAndOrderService ,getListEmployeeReceipt }

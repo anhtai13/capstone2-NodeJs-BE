@@ -26,11 +26,6 @@ const getListEmployeeReceipt = (req, res) => {
     })
 }
 export default {
-<<<<<<< HEAD
-    getListEmployeeAndOrder
-}
-=======
     getListEmployeeAndOrder,
     getListEmployeeReceipt
 }
->>>>>>> 028148a9109c369f57eb51ce8b479a6732a88d35
