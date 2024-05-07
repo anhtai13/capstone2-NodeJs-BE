@@ -24,7 +24,7 @@ const getListEmployeeAndOrder = (params, callback) => {
 // lấy danh sách các nhân viên có tổng tiền nợ
 const getListEmployeeReceipt = (params, callback) => {
   connection.query(
-    `SELECT u.*, FORMAT(SUM(od.unit_price), 0) AS sum_total
+    `SELECT u.*, FORMAT(SUM(od.unit_price), 0) AS employee_debt
     FROM emoloyee_debt ed
     JOIN order_details od ON ed.order_detail_id = od.order_detail_id
     JOIN users u ON od.employee_code = u.user_id
@@ -40,4 +40,5 @@ const getListEmployeeReceipt = (params, callback) => {
     }
   );
 };
-export default { getListEmployeeAndOrder,getListEmployeeReceipt };
+
+export default { getListEmployeeAndOrder, getListEmployeeReceipt };
