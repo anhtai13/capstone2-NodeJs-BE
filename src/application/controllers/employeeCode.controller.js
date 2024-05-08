@@ -25,7 +25,23 @@ const getListEmployeeReceipt = (req, res) => {
         }
     })
 }
+const AddEmployeeDebt = (req, res) => {
+    const receiptUpdated = req.body
+
+    employeeCodeService.AddEmployeeDebt(receiptUpdated, (err, result) => {
+        if (err) {
+            console.log(err)
+            res.status(500).send({
+                errData: err.data,
+                error: err.message
+            });
+        } else {
+            res.status(202).send("Success");
+        }
+    })
+}
 export default {
     getListEmployeeAndOrder,
-    getListEmployeeReceipt
+    getListEmployeeReceipt,
+    AddEmployeeDebt
 }

@@ -24,7 +24,7 @@ const getListEmployeeAndOrder = (params, callback) => {
 // lấy danh sách các nhân viên có tổng tiền nợ
 const getListEmployeeReceipt = (params, callback) => {
   connection.query(
-    `SELECT u.*, FORMAT(SUM(od.unit_price), 0) AS sum_total
+    `SELECT u.*, FORMAT(SUM(od.unit_price), 0) AS employee_debt
     FROM emoloyee_debt ed
     JOIN order_details od ON ed.order_detail_id = od.order_detail_id
     JOIN users u ON od.employee_code = u.user_id
@@ -40,4 +40,20 @@ const getListEmployeeReceipt = (params, callback) => {
     }
   );
 };
-export default { getListEmployeeAndOrder,getListEmployeeReceipt };
+// receipt employee debt
+const AddEmployeeDebt = (params, callback) => {
+  const mysqlTimestamp = (new Date(params.created_at)).toISOString().slice(0, 19).replace('T', ' ');
+  connection.query(
+    `INSERT INTO debt_history (user_id, created_at, price) VALUES (?, ?, ?)`,
+    [params.id, mysqlTimestamp, params.total],
+    (error, results) => {
+      if (error) {
+        callback({ message: "Something wrong!" ,error }, null);
+      } else {
+        callback(null, { message: "Success!" ,results });
+      }
+    }
+  );
+};
+
+export default { getListEmployeeAndOrder, getListEmployeeReceipt, AddEmployeeDebt };

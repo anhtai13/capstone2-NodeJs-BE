@@ -20,4 +20,14 @@ const getListEmployeeReceipt = (params, callback) => {
     });
 }
 
-export default { getListEmployeeAndOrderService ,getListEmployeeReceipt }
+const AddEmployeeDebt = (params, callback) => {
+    employeeCodeRepositories.AddEmployeeDebt(params, (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
+    });
+}
+
+export default { getListEmployeeAndOrderService ,getListEmployeeReceipt ,AddEmployeeDebt}
