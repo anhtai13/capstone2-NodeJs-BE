@@ -1,7 +1,7 @@
 import employeeCodeRepositories from "../repositories/employeeCode.repositories.js";
 
-const getListEmployeeAndOrderService = (params, callback) => {
-    employeeCodeRepositories.getListEmployeeAndOrder(params, (err, result) => {
+const getListDebtHistory = (params, callback) => {
+    employeeCodeRepositories.getListDebtHistory(params, (err, result) => {
         if (err) {
             callback(err, null);
         } else {
@@ -30,4 +30,4 @@ const AddEmployeeDebt = (params, callback) => {
     });
 }
 
-export default { getListEmployeeAndOrderService ,getListEmployeeReceipt ,AddEmployeeDebt}
+export default { getListDebtHistory ,getListEmployeeReceipt ,AddEmployeeDebt}
