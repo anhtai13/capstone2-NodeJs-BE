@@ -1,5 +1,5 @@
 import getConnection from "../../config/connection.database.js";
-
+import moment from "moment";
 const connection = getConnection();
 
 const getListEmployeeAndOrder = (params, callback) => {
@@ -65,10 +65,10 @@ const getListEmployeeReceipt = (params, callback) => {
 
 // receipt employee debt
 const AddEmployeeDebt = (params, callback) => {
-  const mysqlTimestamp = (new Date(params.created_at)).toISOString().slice(0, 19).replace('T', ' ');
+  const date = moment(params.repayment_at).format('YYYY-MM-DD HH:mm:ss');
   connection.query(
-    `INSERT INTO debt_history (user_id, created_at, price) VALUES (?, ?, ?)`,
-    [params.id, mysqlTimestamp, params.total],
+    `INSERT INTO debt_history (user_id, repayment_at, price) VALUES (?, ?, ?)`,
+    [params.id, date, params.total],
     (error, results) => {
       if (error) {
         callback({ message: "Something wrong!" ,error }, null);
