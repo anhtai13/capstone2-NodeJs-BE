@@ -16,20 +16,20 @@ const getListOrderDetail = (params, callback) => {
 const getOrderDetailById = (params, callback) => {
     console.log(params)
     connection.query(
-    `SELECT od.*,o.*,s.*,u.* 
+        `SELECT od.*,o.*,s.*,u.* 
     FROM order_details 
     AS od JOIN orders AS o ON od.order_id = o.order_id JOIN services 
     AS s ON od.service_id = s.service_id JOIN users 
     AS u ON o.user_id = u.user_id
     WHERE o.order_id=?`,
-    [params], (error, results) => {
-        if (error) {
-            callback({ message: "Something wrong!" }, null);
-        }
-        else {
-            callback(null, results);
-        }
-    });
+        [params], (error, results) => {
+            if (error) {
+                callback({ message: "Something wrong!" }, null);
+            }
+            else {
+                callback(null, results);
+            }
+        });
 }
 
 export default {

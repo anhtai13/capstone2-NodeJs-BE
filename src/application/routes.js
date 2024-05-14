@@ -59,6 +59,7 @@ router.delete("/services/:id", serviceController.deleteService);
 
 // Order management
 router.get("/order", orderController.getListOrder); // get list order 
+
 router.get("/order_total/:id", orderController.getOrderTotalPrice);
 
 
@@ -81,15 +82,31 @@ router.get("/order_details", orderDetailController.getListOrderDetail);
 router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 
 // Employee And Order Details management
+router.get("/employee_and_order", employeeCodeController.getListEmployeeAndOrder);
+
+//Update Status_ID Orders
+router.put('/orders/:order_id/update-status', serviceController.updateOrderStatus);
+
+//Getlist Order By EmployeeCode
+router.get("/orders/employee/:employeeCode", orderController.getListOrderByEmployeeCode);
+
+// Schudle WorkDate
+router.get('/orders/:workDate/:employeeCode', orderController.getListOrderByDateController);
+
 router.get("/employee_debt_history", employeeCodeController.getListDebtHistory);
+
 router.get("/employee_and_Receipt", employeeCodeController.getListEmployeeReceipt);
+<<<<<<< HEAD
 router.get("/employee_and_Receipt/:id", employeeCodeController.getListEmployeeReceiptId);
+=======
+
+>>>>>>> e5724e6caecb4b2dfe130f02addc2b6f4d7f52c8
 router.post("/add_receipt", employeeCodeController.AddEmployeeDebt);
 
 // Contact management
 router.get("/contact", contactController.getListContact);
 router.get("/contact/:id", contactController.getDetailContact);
-router.post("/contact", contactController.addContact);
+router.post("/contact", contactController.addContact);  
 router.put("/contact", contactController.updateContact);
 router.delete("/contact/:id", contactController.deleteContact);
 

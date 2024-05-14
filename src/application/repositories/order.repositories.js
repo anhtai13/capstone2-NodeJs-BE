@@ -17,6 +17,42 @@ const getListOrder = (params, callback) => {
   );
 };
 
+
+const getListOrderByEmployeeCode = (employeeCode, callback) => {
+  connection.query(
+    `SELECT orders.*, order_details.*
+     FROM orders
+     INNER JOIN order_details ON orders.order_id = order_details.order_id
+     INNER JOIN users ON order_details.employee_code = users.employee_code
+     WHERE users.employee_code = ?`,
+    [employeeCode],
+    (error, results) => {
+      if (error) {
+        callback({ message: "Something wrong!" }, null);
+      } else {
+        callback(null, results);
+      }
+    }
+  );
+};
+
+const getListOrderByDateRepository = (workDate, employeeCode, callback) => {
+  connection.query(
+    `SELECT * FROM orders
+     INNER JOIN order_details ON orders.order_id = order_details.order_id
+     WHERE order_details.work_date = ? AND order_details.employee_code = ?`,
+    [workDate, employeeCode],
+    (error, results) => {
+      if (error) {
+        callback({ message: "Something wrong!" }, null);
+      } else {
+        callback(null, results);
+      }
+    }
+  );
+};
+
+
 const getOrderTotalPrice = (params, callback) => {
   if (params != "-1") {
     connection.query(
@@ -68,7 +104,7 @@ const addOrder = (params, callback) => {
       const user_id = params.user_id;
       const status_id = 1;
       connection.query(
-        `INSERT INTO orders (serial_number, user_id, order_at, total_price, status_id, created_at, created_by_id, txn_ref, amount, order_infor, status, vnp_ResponseCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO orders (serial_number, user_id, order_at, total_price, status_id, created_at, created_by_id, txn_ref, amount, order_infor, status, vnp_ResponseCode, notification) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           serialNumber,
           user_id,
@@ -82,6 +118,7 @@ const addOrder = (params, callback) => {
           params.order_infor,
           params.status,
           params.vnp_ResponseCode,
+          params.notification,
         ],
         (orderError, orderResults) => {
           if (orderError) {
@@ -92,7 +129,7 @@ const addOrder = (params, callback) => {
           const lastIdInsert = orderResults.insertId;
           const formattedWorkDate = params.work_date.split('/').reverse().join('-');
           connection.query(
-            `INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, name_service, estimated_time, vnp_ResponseCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, name_service, estimated_time, vnp_ResponseCode, payment, status_payment, notification) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
               lastIdInsert,
               params.phone_number,
@@ -109,6 +146,9 @@ const addOrder = (params, callback) => {
               params.name_service,
               params.estimated_time,
               params.vnp_ResponseCode,
+              params.payment,
+              params.status_payment,
+              params.notification,
             ],
             (detailError, detailResults) => {
               if (detailError) {
@@ -137,7 +177,7 @@ const addOrderDetails = (params, callback) => {
         callback({ message: 'Failed to add order details' }, null);
       }
     }
-});
+  });
 };
 
 
@@ -266,4 +306,6 @@ export default {
   getOrderTotalPrice,
   getDetailOrderByUserId,
   addOrderDetails,
+  getListOrderByEmployeeCode,
+  getListOrderByDateRepository,
 };

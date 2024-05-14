@@ -12,6 +12,34 @@ const getListOrder = (req, res) => {
   });
 };
 
+const getListOrderByEmployeeCode = (req, res) => {
+  const employeeCode = req.params.employeeCode;
+
+  orderService.getListOrderByEmployeeCode(employeeCode, (err, result) => {
+    if (err) {
+      res.status(500).send({
+        errMessage: err.message,
+      });
+    } else {
+      res.status(200).send(result);
+    }
+  });
+};
+
+
+const getListOrderByDateController = (req, res) => {
+  const { workDate, employeeCode } = req.params;
+  orderService.getListOrderByDateService(workDate, employeeCode, (err, result) => {
+    if (err) {
+      res.status(500).send({
+        errMessage: err.message,
+      });
+    } else {
+      res.status(200).send(result);
+    }
+  });
+};
+
 const getOrderTotalPrice = (req, res) => {
   const { id } = req.params;
   orderService.getOrderTotalPrice(id, (err, result) => {
@@ -130,4 +158,6 @@ export default {
   getOrderTotalPrice,
   getDetailOrderByUserId,
   addOrderDetails,
+  getListOrderByEmployeeCode,
+  getListOrderByDateController,
 };

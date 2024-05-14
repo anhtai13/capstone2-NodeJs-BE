@@ -129,6 +129,17 @@ const searchOrderDetailsServices = (params, callback) => {
   });
 };
 
+const updateOrderStatus = (orderId, callback) => {
+  serviceRepositories.updateOrderStatus(orderId, (err, statusId) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, statusId);
+    }
+  });
+};
+
+
 export default {
   searchServices,
   getListServices,
@@ -139,4 +150,5 @@ export default {
   updateService,
   deleteService,
   searchOrderDetailsServices,
+  updateOrderStatus,
 };
