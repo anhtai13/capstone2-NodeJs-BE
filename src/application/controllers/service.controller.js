@@ -110,15 +110,32 @@ const deleteService = (req, res) => {
 const searchOrderDetailsServices = (req, res) => {
     const keyword = req.query.keyword;
     Service.searchOrderDetailsServices({ keyword }, (err, result) => {
-      if (err) {
-        res.status(500).send({
-          errMessage: err.message
-        });
-      } else {
-        res.status(200).send(result);
-      }
+        if (err) {
+            res.status(500).send({
+                errMessage: err.message
+            });
+        } else {
+            res.status(200).send(result);
+        }
     })
-  };
+};
+
+
+const updateOrderStatus = (req, res) => {
+    const orderId = req.params.order_id;
+    Service.updateOrderStatus(orderId, (err, statusId) => {
+        if (err) {
+            res.status(500).send({
+                error: err.message
+            });
+        } else {
+            res.status(200).send({
+                message: "Order status updated successfully",
+                status_id: statusId
+            });
+        }
+    });
+};
 
 export default {
     searchServices,
@@ -130,4 +147,5 @@ export default {
     updateService,
     deleteService,
     searchOrderDetailsServices,
+    updateOrderStatus,
 }

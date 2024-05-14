@@ -10,6 +10,26 @@ const getListOrder = (params, callback) => {
   });
 };
 
+const getListOrderByEmployeeCode = (employeeCode, callback) => {
+  orderRepositories.getListOrderByEmployeeCode(employeeCode, (err, result) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, result);
+    }
+  });
+};
+
+const getListOrderByDateService = (workDate, employeeCode, callback) => {
+  orderRepositories.getListOrderByDateRepository(workDate, employeeCode, (err, result) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, result);
+    }
+  });
+};
+
 const getOrderTotalPrice = (params, callback) => {
   orderRepositories.getOrderTotalPrice(params, (err, result) => {
     if (err) {
@@ -100,4 +120,6 @@ export default {
   getOrderTotalPrice,
   getDetailOrderByUserId,
   addOrderDetails,
+  getListOrderByEmployeeCode,
+  getListOrderByDateService,
 };

@@ -168,10 +168,14 @@ const login1 = (params, callback) => {
                   callback({ message: "Something went wrong!" }, null);
                   return;
                 }
+                const user_id = results[0].user_id;
+                const role = results[0].role;
+                const employee_code = results[0].employee_code;
                 callback(null, {
                   key: key,
-                  id: results[0].user_id,
-                  role: results[0].role,
+                  id: user_id,
+                  role: role,
+                  employee_code: employee_code
                 });
               }
             );
@@ -184,6 +188,7 @@ const login1 = (params, callback) => {
     }
   );
 };
+
 
 const logout = (params, callback) => {
   connection.query(

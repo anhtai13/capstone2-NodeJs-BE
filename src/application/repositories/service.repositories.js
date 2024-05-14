@@ -190,6 +190,66 @@ const deleteService = (params, callback) => {
   );
 };
 
+const updateOrderStatus = (orderId, callback) => {
+  connection.query(
+    "UPDATE orders SET status_id = 2 WHERE order_id = ?",
+    [orderId],
+    (error, results) => {
+      if (error) {
+        callback({ message: "Something went wrong while updating order status" }, null);
+      } else {
+        connection.query(
+          "SELECT payment FROM order_details WHERE order_id = ?",
+          [orderId],
+          (error, paymentResult) => {
+            if (error) {
+              callback({ message: "Error retrieving payment method" }, null);
+            } else {
+              const paymentMethod = paymentResult[0].payment;
+              if (paymentMethod === "Cash") {
+                connection.query(
+                  "UPDATE order_details SET status_payment = 'Successful Payment' WHERE order_id = ?",
+                  [orderId],
+                  (error, updateResult) => {
+                    if (error) {
+                      callback({ message: "Error updating payment status" }, null);
+                    } else {
+                      connection.query(
+                        "SELECT status_id FROM orders WHERE order_id = ?",
+                        [orderId],
+                        (error, statusResult) => {
+                          if (error) {
+                            callback({ message: "Error retrieving updated status" }, null);
+                          } else {
+                            callback(null, statusResult[0].status_id);
+                          }
+                        }
+                      );
+                    }
+                  }
+                );
+              } else {
+                connection.query(
+                  "SELECT status_id FROM orders WHERE order_id = ?",
+                  [orderId],
+                  (error, statusResult) => {
+                    if (error) {
+                      callback({ message: "Error retrieving updated status" }, null);
+                    } else {
+                      callback(null, statusResult[0].status_id);
+                    }
+                  }
+                );
+              }
+            }
+          }
+        );
+      }
+    }
+  );
+};
+
+
 export default {
   searchOrderDetailsServices,
   searchServices,
@@ -200,4 +260,5 @@ export default {
   getDetailService,
   updateService,
   deleteService,
+  updateOrderStatus,
 };
