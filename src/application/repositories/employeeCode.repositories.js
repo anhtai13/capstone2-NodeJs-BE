@@ -65,6 +65,32 @@ const getListEmployeeReceipt = (params, callback) => {
   );
 };
 
+// lấy danh sách các nhân viên có tổng tiền nợ
+const getListEmployeeReceiptId = (params, callback) => {
+  connection.query(
+    `SELECT BANG_A.*, BANG_B.sum_nhan, (BANG_A.sum_no - BANG_B.sum_nhan) as sum_can_tra FROM
+    (SELECT u.*, SUM(od.unit_price) AS sum_no
+    FROM emoloyee_debt ed
+    JOIN order_details od ON ed.order_detail_id = od.order_detail_id
+    JOIN users u ON od.employee_code = u.user_id
+    WHERE od.responeCode IS NULL AND u.role = 3
+    GROUP BY u.user_id) AS BANG_A
+    JOIN
+    (SELECT debt_history.user_id, SUM(debt_history.price) as sum_nhan
+    FROM clean_house.debt_history
+    GROUP BY user_id) AS BANG_B
+    ON BANG_A.user_id = BANG_B.user_id;`,
+    [params],
+    (error, results) => {
+      if (error) {
+        callback({ message: "Something wrong!" }, null);
+      } else {
+        callback(null, results);
+      }
+    }
+  );
+};
+
 // receipt employee debt
 const AddEmployeeDebt = (params, callback) => {
   const date = moment(params.repayment_at).format('YYYY-MM-DD HH:mm:ss');
@@ -81,4 +107,4 @@ const AddEmployeeDebt = (params, callback) => {
   );
 };
 
-export default { getListDebtHistory, getListEmployeeReceipt, AddEmployeeDebt };
+export default { getListDebtHistory, getListEmployeeReceipt, AddEmployeeDebt, getListEmployeeReceiptId };

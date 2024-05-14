@@ -20,6 +20,17 @@ const getListEmployeeReceipt = (params, callback) => {
     });
 }
 
+// lấy danh sách các nhân viên có tổng tiền nợ theo Id
+const getListEmployeeReceiptId = (params, callback) => {
+    employeeCodeRepositories.getListEmployeeReceiptId(params, (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
+    });
+}
+
 const AddEmployeeDebt = (params, callback) => {
     employeeCodeRepositories.AddEmployeeDebt(params, (err, result) => {
         if (err) {
@@ -30,4 +41,4 @@ const AddEmployeeDebt = (params, callback) => {
     });
 }
 
-export default { getListDebtHistory ,getListEmployeeReceipt ,AddEmployeeDebt}
+export default { getListDebtHistory ,getListEmployeeReceipt ,AddEmployeeDebt, getListEmployeeReceiptId}

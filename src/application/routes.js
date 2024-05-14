@@ -83,6 +83,7 @@ router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 // Employee And Order Details management
 router.get("/employee_debt_history", employeeCodeController.getListDebtHistory);
 router.get("/employee_and_Receipt", employeeCodeController.getListEmployeeReceipt);
+router.get("/employee_and_Receipt/:id", employeeCodeController.getListEmployeeReceiptId);
 router.post("/add_receipt", employeeCodeController.AddEmployeeDebt);
 
 // Contact management
