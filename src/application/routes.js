@@ -84,6 +84,20 @@ router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 // Employee And Order Details management
 router.get("/employee_and_order", employeeCodeController.getListEmployeeAndOrder);
 
+//Update Status_ID Orders
+router.put('/orders/:order_id/update-status', serviceController.updateOrderStatus);
+
+//Getlist Order By EmployeeCode
+router.get("/orders/employee/:employeeCode", orderController.getListOrderByEmployeeCode);
+
+// Schudle WorkDate
+router.get('/orders/:workDate/:employeeCode', orderController.getListOrderByDateController);
+
+router.get("/employee_debt_history", employeeCodeController.getListDebtHistory);
+
+router.get("/employee_and_Receipt", employeeCodeController.getListEmployeeReceipt);
+
+router.post("/add_receipt", employeeCodeController.AddEmployeeDebt);
 
 // Contact management
 router.get("/contact", contactController.getListContact);
