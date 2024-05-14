@@ -81,8 +81,7 @@ router.get("/order_details", orderDetailController.getListOrderDetail);
 
 router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 
-// Employee And Order Details management
-router.get("/employee_and_order", employeeCodeController.getListEmployeeAndOrder);
+
 
 //Update Status_ID Orders
 router.put('/orders/:order_id/update-status', serviceController.updateOrderStatus);
@@ -96,11 +95,7 @@ router.get('/orders/:workDate/:employeeCode', orderController.getListOrderByDate
 router.get("/employee_debt_history", employeeCodeController.getListDebtHistory);
 
 router.get("/employee_and_Receipt", employeeCodeController.getListEmployeeReceipt);
-<<<<<<< HEAD
 router.get("/employee_and_Receipt/:id", employeeCodeController.getListEmployeeReceiptId);
-=======
-
->>>>>>> e5724e6caecb4b2dfe130f02addc2b6f4d7f52c8
 router.post("/add_receipt", employeeCodeController.AddEmployeeDebt);
 
 // Contact management

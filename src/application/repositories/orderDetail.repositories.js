@@ -16,7 +16,7 @@ const getListOrderDetail = (params, callback) => {
 const getOrderDetailById = (params, callback) => {
     console.log(params)
     connection.query(
-        `SELECT od.*,o.*,s.*,u.* 
+        `SELECT od,o.*,s.*,u.* 
     FROM order_details 
     AS od JOIN orders AS o ON od.order_id = o.order_id JOIN services 
     AS s ON od.service_id = s.service_id JOIN users 
