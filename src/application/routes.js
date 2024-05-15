@@ -81,8 +81,12 @@ router.get("/order_details", orderDetailController.getListOrderDetail);
 
 router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 
+<<<<<<< HEAD
 // // Employee And Order Details management
 // router.get("/employee_and_order", employeeCodeController.getListEmployeeAndOrder);
+=======
+
+>>>>>>> 92407d95f45679ea1f5b6423ef6602721e16801b
 
 //Update Status_ID Orders
 router.put('/orders/:order_id/update-status', serviceController.updateOrderStatus);
