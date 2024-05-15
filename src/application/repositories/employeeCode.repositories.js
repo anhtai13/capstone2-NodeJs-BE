@@ -46,23 +46,6 @@ const getListDebtHistory = (params, callback) => {
 // lấy danh sách các nhân viên có tổng tiền nợ
 const getListEmployeeReceipt = (params, callback) => {
   connection.query(
-<<<<<<< HEAD
-    `SELECT u.*, COALESCE(BANG_A.debt, 0) AS debt, COALESCE(BANG_B.receipt, 0) AS re, (COALESCE(BANG_A.debt, 0) - COALESCE(BANG_B.receipt, 0)) as balance
-    FROM users u
-    LEFT JOIN
-        (SELECT od.employee_code, SUM(od.unit_price) AS debt
-        FROM emoloyee_debt ed
-        JOIN order_details od ON ed.order_detail_id = od.order_detail_id
-        WHERE od.responeCode IS NULL
-        GROUP BY od.employee_code) AS BANG_A
-        ON u.user_id = BANG_A.employee_code
-    LEFT JOIN
-        (SELECT dh.user_id, SUM(dh.price) as receipt
-        FROM debt_history dh
-        GROUP BY dh.user_id) AS BANG_B
-        ON u.user_id = BANG_B.user_id
-    WHERE u.role = 3;`,
-=======
     `SELECT u.*,BANG_A.emoloyee_debt_id,BANG_A.order_detail_id, 
     FORMAT(COALESCE(BANG_A.sum_no, 0), 'C', 'vi-VN') AS sum_no, 
     FORMAT(COALESCE(BANG_B.sum_nhan, 0), 'C', 'vi-VN') AS sum_nhan, 
@@ -82,7 +65,6 @@ LEFT JOIN
  ON u.user_id = BANG_B.user_id
 WHERE u.role = 3;
     `,
->>>>>>> 92407d95f45679ea1f5b6423ef6602721e16801b
     [params],
     (error, results) => {
       if (error) {
@@ -97,23 +79,6 @@ WHERE u.role = 3;
 // lấy danh sách các nhân viên có tổng tiền nợ
 const getListEmployeeReceiptId = (params, callback) => {
   connection.query(
-<<<<<<< HEAD
-    `SELECT u.*, COALESCE(BANG_A.debt, 0) AS debt, COALESCE(BANG_B.receipt, 0) AS re, (COALESCE(BANG_A.debt, 0) - COALESCE(BANG_B.receipt, 0)) as balance
-    FROM users u
-    LEFT JOIN
-        (SELECT od.employee_code, SUM(od.unit_price) AS debt
-        FROM emoloyee_debt ed
-        JOIN order_details od ON ed.order_detail_id = od.order_detail_id
-        WHERE od.responeCode IS NULL
-        GROUP BY od.employee_code) AS BANG_A
-        ON u.user_id = BANG_A.employee_code
-    LEFT JOIN
-        (SELECT dh.user_id, SUM(dh.price) as receipt
-        FROM debt_history dh
-        GROUP BY dh.user_id) AS BANG_B
-        ON u.user_id = BANG_B.user_id
-    WHERE u.role = 3`,
-=======
     `SELECT u.*,BANG_A.emoloyee_debt_id,BANG_A.order_detail_id, 
     FORMAT(COALESCE(BANG_A.sum_no, 0), 'C', 'vi-VN') AS sum_no, 
     FORMAT(COALESCE(BANG_B.sum_nhan, 0), 'C', 'vi-VN') AS sum_nhan, 
@@ -132,7 +97,6 @@ LEFT JOIN
  GROUP BY dh.user_id) AS BANG_B
  ON u.user_id = BANG_B.user_id
 WHERE u.role = 3 and u.user_id =?`,
->>>>>>> 92407d95f45679ea1f5b6423ef6602721e16801b
     [params],
     (error, results) => {
       if (error) {
