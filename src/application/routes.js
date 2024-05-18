@@ -81,7 +81,6 @@ router.get("/order_details", orderDetailController.getListOrderDetail);
 
 router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 
-
 //Update Status_ID Orders
 router.put('/orders/:order_id/update-status', serviceController.updateOrderStatus);
 

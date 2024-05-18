@@ -83,20 +83,20 @@ const getListEmployeeReceiptId = (params, callback) => {
     FORMAT(COALESCE(BANG_A.sum_no, 0), 'C', 'vi-VN') AS sum_no, 
     FORMAT(COALESCE(BANG_B.sum_nhan, 0), 'C', 'vi-VN') AS sum_nhan, 
     FORMAT((COALESCE(BANG_A.sum_no, 0) - COALESCE(BANG_B.sum_nhan, 0)), 'C', 'vi-VN') as balance
-FROM users u
-LEFT JOIN
- (SELECT od.employee_code,ed.emoloyee_debt_id,ed.order_detail_id, SUM(od.unit_price) AS sum_no
- FROM emoloyee_debt ed
- JOIN order_details od ON ed.order_detail_id = od.order_detail_id
- WHERE od.responeCode IS NULL
- GROUP BY od.employee_code) AS BANG_A
- ON u.user_id = BANG_A.employee_code
-LEFT JOIN
- (SELECT dh.user_id, SUM(dh.price) as sum_nhan
- FROM debt_history dh
- GROUP BY dh.user_id) AS BANG_B
- ON u.user_id = BANG_B.user_id
-WHERE u.role = 3 and u.user_id =?`,
+  FROM users u
+  LEFT JOIN
+  (SELECT od.employee_code,ed.emoloyee_debt_id,ed.order_detail_id, SUM(od.unit_price) AS sum_no
+  FROM emoloyee_debt ed
+  JOIN order_details od ON ed.order_detail_id = od.order_detail_id
+  WHERE od.responeCode IS NULL
+  GROUP BY od.employee_code) AS BANG_A
+  ON u.user_id = BANG_A.employee_code
+  LEFT JOIN
+  (SELECT dh.user_id, SUM(dh.price) as sum_nhan
+  FROM debt_history dh
+  GROUP BY dh.user_id) AS BANG_B
+  ON u.user_id = BANG_B.user_id
+  WHERE u.role = 3 and u.user_id =?`,
     [params],
     (error, results) => {
       if (error) {
