@@ -88,10 +88,10 @@ const updateService = (params, callback) => {
     !params.name_service &&
     !params.sku &&
     !params.quantity &&
-    !params.unit_price &&
+    // !params.unit_price &&
     !params.category
   ) {
-    callback({ message: "Please complete all information" }, null);
+    callback({ message: "Please complete all information nè" }, null);
   } else if (!validatePrice(params.unit_price)) {
     callback({ message: "Invalid price" }, null);
   } else {

@@ -110,7 +110,7 @@ router.post(
   uploadController.addServices
 );
 router.put(
-  "/upload/:id",
+  "/upload",
   uploadController.uploadImage,
   uploadController.editService
 );
