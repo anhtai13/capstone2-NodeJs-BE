@@ -30,7 +30,7 @@ const getListServices = (params, callback) => {
 
 const searchServices = (params, callback) => {
   const keyword = params.keyword;
-  const query = `SELECT * FROM services WHERE name_service LIKE '%${keyword}%'`;
+  const query = `SELECT * FROM services WHERE service_name LIKE '%${keyword}%'`;
   connection.query(query, (error, results) => {
     if (error) {
       callback({ message: "Something wrong!" }, null);
@@ -46,7 +46,7 @@ const searchOrderDetailsServices = (params, callback) => {
   SELECT od.*, o.*
   FROM order_details od
   INNER JOIN orders o ON od.order_id = o.order_id
-  WHERE od.name_service LIKE '%${keyword}%'
+  WHERE od.service_name LIKE '%${keyword}%'
   `;
   connection.query(query, (error, results) => {
     if (error) {
@@ -86,7 +86,7 @@ const getServiceByCategory = (params, callback) => {
 
 const addService = (params, callback) => {
   connection.query(
-    "insert into services (description,name_service,unit_price,image,category_id,created_at,created_by_id,updated_at,updated_by_id) values (?,?,?,?,?,?,?,?,?)",
+    "insert into services (description,service_name,unit_price,image,category_id,created_at,created_by_id,updated_at,updated_by_id) values (?,?,?,?,?,?,?,?,?)",
     [
       params.description,
       params.name,
@@ -137,7 +137,7 @@ const updateService = (params, callback) => {
         callback({ message: "Service not found!" }, null);
       } else {
         connection.query(
-          "update services set description=?,name_service=?,unit_price=?,image=?,category_id=?,created_at=?,created_by_id=?,updated_at=?,updated_by_id=? where service_id=?",
+          "update services set description=?,service_name=?,unit_price=?,image=?,category_id=?,created_at=?,created_by_id=?,updated_at=?,updated_by_id=? where service_id=?",
           [
             params.description,
             params.name,
