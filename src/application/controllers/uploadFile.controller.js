@@ -44,7 +44,7 @@ function editService(req, res) {
     const service = {
       ...req.body, // assuming all other fields are in req.body
       image: req.file.filename, // the image file name
-      id: req.params.id, 
+      id: req.body.id, 
     };
     console.log(service);
     const result = uploadFileService.editFileServices(service);

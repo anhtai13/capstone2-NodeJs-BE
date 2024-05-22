@@ -5,7 +5,8 @@ const connection = getConnection();
 
 const getListOrder = (params, callback) => {
   connection.query(
-    `SELECT * FROM orders
+    `SELECT *, FORMAT(order_details.unit_price, 0) AS unit_price
+     FROM orders
      INNER JOIN order_details ON orders.order_id = order_details.order_id`,
     (error, results) => {
       if (error) {
@@ -20,7 +21,7 @@ const getListOrder = (params, callback) => {
 
 const getListOrderByEmployeeCode = (employeeCode, callback) => {
   connection.query(
-    `SELECT orders.*, order_details.*
+    `SELECT orders.*, order_details.*,FORMAT(order_details.unit_price, 0) AS unit_price
      FROM orders
      INNER JOIN order_details ON orders.order_id = order_details.order_id
      INNER JOIN users ON order_details.employee_code = users.employee_code

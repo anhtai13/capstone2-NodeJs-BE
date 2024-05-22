@@ -25,6 +25,21 @@ const getListEmployeeReceipt = (req, res) => {
         }
     })
 }
+
+// lấy danh sách các nhân viên có tổng tiền nợ
+const getListEmployeeReceiptId = (req, res) => {
+    const id = req.params.id
+    employeeCodeService.getListEmployeeReceiptId(id, (err, result) => {
+        if (err) {
+            res.status(500).send({
+                errMessage: err.message
+            });
+        } else {
+            res.status(200).send(result);
+        }
+    })
+}
+
 const AddEmployeeDebt = (req, res) => {
     const receiptUpdated = req.body
 
@@ -43,5 +58,6 @@ const AddEmployeeDebt = (req, res) => {
 export default {
     getListDebtHistory,
     getListEmployeeReceipt,
-    AddEmployeeDebt
+    AddEmployeeDebt,
+    getListEmployeeReceiptId,
 }

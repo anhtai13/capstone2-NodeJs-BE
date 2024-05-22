@@ -93,7 +93,7 @@ router.get('/orders/:workDate/:employeeCode', orderController.getListOrderByDate
 router.get("/employee_debt_history", employeeCodeController.getListDebtHistory);
 
 router.get("/employee_and_Receipt", employeeCodeController.getListEmployeeReceipt);
-
+router.get("/employee_and_Receipt/:id", employeeCodeController.getListEmployeeReceiptId);
 router.post("/add_receipt", employeeCodeController.AddEmployeeDebt);
 
 
@@ -114,7 +114,7 @@ router.post(
   uploadController.addServices
 );
 router.put(
-  "/upload/:id",
+  "/upload",
   uploadController.uploadImage,
   uploadController.editService
 );
