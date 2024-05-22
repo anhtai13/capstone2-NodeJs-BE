@@ -192,7 +192,7 @@ const deleteService = (params, callback) => {
 
 const updateOrderStatus = (orderId, callback) => {
   connection.query(
-    "UPDATE orders SET status_id = 2 WHERE order_id = ?",
+    "UPDATE orders SET status_id = 3 WHERE order_id = ?",
     [orderId],
     (error, results) => {
       if (error) {

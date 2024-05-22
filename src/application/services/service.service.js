@@ -46,10 +46,10 @@ const getCategory = (params, callback) => {
 
 // hàm add dịch vụ
 const addService = (params, callback) => {
-  if (!params.name_service && !params.unit_price) {
+  if (!params.service_name && !params.unit_price) {
     callback({ message: "Please complete all information" }, null);
   }
-  else if (!params.name_service) {
+  else if (!params.service_name) {
     callback({ message: "Error: Please enter a service name" }, null);
   } else if (!params.unit_price) {
     callback({ message: "Error: Please enter service price" }, null);
@@ -85,7 +85,7 @@ const getDetailService = (params, callback) => {
 
 const updateService = (params, callback) => {
   if (
-    !params.name_service &&
+    !params.service_name &&
     !params.sku &&
     !params.quantity &&
     // !params.unit_price &&

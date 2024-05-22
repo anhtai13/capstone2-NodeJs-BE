@@ -130,7 +130,7 @@ const addOrder = (params, callback) => {
           const lastIdInsert = orderResults.insertId;
           const formattedWorkDate = params.work_date.split('/').reverse().join('-');
           connection.query(
-            `INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, name_service, estimated_time, vnp_ResponseCode, payment, status_payment, notification) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, service_name, estimated_time, vnp_ResponseCode, payment, status_payment, notification) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
               lastIdInsert,
               params.phone_number,
@@ -144,7 +144,7 @@ const addOrder = (params, callback) => {
               params.start_time,
               params.full_name,
               params.housetype,
-              params.name_service,
+              params.service_name,
               params.estimated_time,
               params.vnp_ResponseCode,
               params.payment,
@@ -298,6 +298,27 @@ const deleteOrder = (params, callback) => {
   );
 };
 
+const getStatusIdByEmployeeCodeRepository = (employeeCode, callback) => {
+  connection.query(
+    `SELECT employee_code FROM order_details WHERE employee_code = ? LIMIT 1`,
+    [employeeCode],
+    (error, results) => {
+      if (error) {
+        callback({ message: "Something wrong!" }, null);
+      } else {
+        if (results.length > 0) {
+          // Nếu tồn tại employee_code trong bảng order_details
+          const statusId = (employeeCode === 0) ? 1 : 2; // status_id sẽ là 1 nếu employee_code == 0, ngược lại là 2
+          callback(null, { status_id: statusId });
+        } else {
+          // Nếu không tồn tại employee_code trong bảng order_details
+          callback({ message: "Employee code not found!" }, null);
+        }
+      }
+    }
+  );
+};
+
 export default {
   getListOrder,
   addOrder,
@@ -309,4 +330,5 @@ export default {
   addOrderDetails,
   getListOrderByEmployeeCode,
   getListOrderByDateRepository,
+  getStatusIdByEmployeeCodeRepository,
 };
