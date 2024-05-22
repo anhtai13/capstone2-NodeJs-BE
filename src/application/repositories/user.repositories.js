@@ -104,7 +104,6 @@ const addUser = (params, callback) => {
             params.status,
             params.address_user,
             params.phone_number,
-            params.employee_code,
           ],
           (err, results) => {
             if (err) {
