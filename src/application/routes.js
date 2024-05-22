@@ -44,7 +44,7 @@ router.delete("/users/:id", userController.deleteUser);
 router.put("/users/customer/:id", userController.updateInformationCustomer); //new router update information for customer
 
 //Search History Employee
-router.get("/services/searchOrderDetailServices", serviceController.searchOrderDetailsServices); 
+router.get("/services/searchOrderDetailServices", serviceController.searchOrderDetailsServices);
 
 // Services management
 router.get("/services/search", serviceController.searchServices); // new router search services
@@ -81,9 +81,6 @@ router.get("/order_details", orderDetailController.getListOrderDetail);
 
 router.get("/order_details/:id", orderDetailController.getOrderDetailById);
 
-// Employee And Order Details management
-router.get("/employee_and_order", employeeCodeController.getListEmployeeAndOrder);
-
 //Update Status_ID Orders
 router.put('/orders/:order_id/update-status', serviceController.updateOrderStatus);
 
@@ -99,10 +96,14 @@ router.get("/employee_and_Receipt", employeeCodeController.getListEmployeeReceip
 
 router.post("/add_receipt", employeeCodeController.AddEmployeeDebt);
 
+
+// New router for getStatusIdByEmployeeCodeController
+router.get("/employee/status/:employeeCode", orderController.getStatusIdByEmployeeCodeController);
+
 // Contact management
 router.get("/contact", contactController.getListContact);
 router.get("/contact/:id", contactController.getDetailContact);
-router.post("/contact", contactController.addContact);  
+router.post("/contact", contactController.addContact);
 router.put("/contact", contactController.updateContact);
 router.delete("/contact/:id", contactController.deleteContact);
 

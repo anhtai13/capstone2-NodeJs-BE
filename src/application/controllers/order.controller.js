@@ -120,7 +120,6 @@ const getDetailOrderByUserId = (req, res) => {
   });
 };
 
-
 const updateOrder = (req, res) => {
   const orderUpdate = req.body;
   orderService.updateOrder(orderUpdate, (err, result) => {
@@ -149,6 +148,21 @@ const deleteOrder = (req, res) => {
   });
 };
 
+const getStatusIdByEmployeeCodeController = (req, res) => {
+  const { employeeCode } = req.params;
+  // Gọi service để lấy status_id dựa trên employee_code
+  orderService.getStatusIdByEmployeeCode(employeeCode, (err, result) => {
+    if (err) {
+      res.status(500).send({
+        errMessage: err.message,
+      });
+    } else {
+      res.status(200).send(result);
+    }
+  });
+};
+
+
 export default {
   getListOrder,
   addOrder,
@@ -160,4 +174,5 @@ export default {
   addOrderDetails,
   getListOrderByEmployeeCode,
   getListOrderByDateController,
+  getStatusIdByEmployeeCodeController,
 };

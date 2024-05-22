@@ -111,6 +111,16 @@ const deleteOrder = (params, callback) => {
   });
 };
 
+const getStatusIdByEmployeeCode = (employeeCode, callback) => {
+  orderRepositories.getStatusIdByEmployeeCodeRepository(employeeCode, (err, result) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, result);
+    }
+  });
+};
+
 export default {
   getListOrder,
   addOrder,
@@ -122,4 +132,5 @@ export default {
   addOrderDetails,
   getListOrderByEmployeeCode,
   getListOrderByDateService,
+  getStatusIdByEmployeeCode,
 };
