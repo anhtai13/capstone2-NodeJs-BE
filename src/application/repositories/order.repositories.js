@@ -313,6 +313,27 @@ const deleteOrder = (params, callback) => {
   );
 };
 
+const getStatusIdByEmployeeCodeRepository = (employeeCode, callback) => {
+  connection.query(
+    `SELECT employee_code FROM order_details WHERE employee_code = ? LIMIT 1`,
+    [employeeCode],
+    (error, results) => {
+      if (error) {
+        callback({ message: "Something wrong!" }, null);
+      } else {
+        if (results.length > 0) {
+          // Nếu tồn tại employee_code trong bảng order_details
+          const statusId = (employeeCode === 0) ? 1 : 2; // status_id sẽ là 1 nếu employee_code == 0, ngược lại là 2
+          callback(null, { status_id: statusId });
+        } else {
+          // Nếu không tồn tại employee_code trong bảng order_details
+          callback({ message: "Employee code not found!" }, null);
+        }
+      }
+    }
+  );
+};
+
 export default {
   getListOrder,
   addOrder,
@@ -324,4 +345,5 @@ export default {
   addOrderDetails,
   getListOrderByEmployeeCode,
   getListOrderByDateRepository,
+  getStatusIdByEmployeeCodeRepository,
 };
