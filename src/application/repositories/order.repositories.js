@@ -130,7 +130,7 @@ const addOrder = (params, callback) => {
           const lastIdInsert = orderResults.insertId;
           const formattedWorkDate = params.work_date.split('/').reverse().join('-');
           connection.query(
-            `INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, name_service, estimated_time, vnp_ResponseCode, payment, status_payment, notification) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            `INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, service_name, estimated_time, vnp_ResponseCode, payment, status_payment, notification) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
               lastIdInsert,
               params.phone_number,
@@ -144,7 +144,7 @@ const addOrder = (params, callback) => {
               params.start_time,
               params.full_name,
               params.housetype,
-              params.name_service,
+              params.service_name,
               params.estimated_time,
               params.vnp_ResponseCode,
               params.payment,
@@ -157,7 +157,21 @@ const addOrder = (params, callback) => {
                 callback({ message: "Error inserting order details" }, null);
                 return;
               }
-              callback(null, { message: "Successfully ordered!" });
+              const orderDetailId = detailResults.insertId; // Lấy ID của chi tiết đơn hàng
+              
+              // Tiếp tục chèn dữ liệu vào bảng employee_debt với orderDetailId
+              connection.query(
+                `INSERT INTO emoloyee_debt (order_detail_id) VALUES (?)`,
+                [orderDetailId], // Sử dụng orderDetailId và sub_total_price hoặc giá trị phù hợp khác
+                (debtError, debtResults) => {
+                  if (debtError) {
+                    console.log(debtError);
+                    callback({ message: "Error inserting employee debt" }, null);
+                    return;
+                  }
+                  callback(null, { message: "Successfully ordered!" });
+                }
+              );
             }
           );
         }
@@ -165,6 +179,7 @@ const addOrder = (params, callback) => {
     }
   );
 };
+
 
 
 const addOrderDetails = (params, callback) => {
