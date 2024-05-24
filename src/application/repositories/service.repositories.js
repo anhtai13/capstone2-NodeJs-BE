@@ -42,11 +42,13 @@ const searchServices = (params, callback) => {
 
 const searchOrderDetailsServices = (params, callback) => {
   const keyword = params.keyword;
+  const employeeCode = params.employee_code;
   const query = `
-  SELECT od.*, o.*
-  FROM order_details od
-  INNER JOIN orders o ON od.order_id = o.order_id
-  WHERE od.service_name LIKE '%${keyword}%'
+      SELECT od.*, o.*
+      FROM order_details od
+      INNER JOIN orders o ON od.order_id = o.order_id
+      INNER JOIN users u ON od.employee_code = u.employee_code
+      WHERE (od.service_name LIKE '%${keyword}%' AND u.employee_code = '${employeeCode}')
   `;
   connection.query(query, (error, results) => {
     if (error) {
@@ -56,7 +58,6 @@ const searchOrderDetailsServices = (params, callback) => {
     }
   });
 };
-
 const getCategory = (params, callback) => {
   connection.query(`SELECT * FROM service_category`, (error, results) => {
     if (error) {

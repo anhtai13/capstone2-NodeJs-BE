@@ -87,7 +87,7 @@ const addUser = (params, callback) => {
         callback({ message: "Email already exists" }, null);
       } else {
         connection.query(
-          "INSERT INTO users (username,email,password,first_name,last_name,role,avatar,created_at,updated_at,created_by_id,updated_by_id,api_key,status,address_user,phone_number, employee_code) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+          "INSERT INTO users (username,email,password,first_name,last_name,role,avatar,created_at,updated_at,created_by_id,updated_by_id,api_key,status,address_user,phone_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
           [
             params.username,
             params.email,
@@ -104,7 +104,7 @@ const addUser = (params, callback) => {
             params.status,
             params.address_user,
             params.phone_number,
-            params.employee_code,
+            // params.employee_code,
           ],
           (err, results) => {
             if (err) {

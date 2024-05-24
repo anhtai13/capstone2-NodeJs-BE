@@ -167,6 +167,77 @@ const addOrder = (params, callback) => {
 };
 
 
+// const addOrder = (params, callback) => {
+//   const randomNumber = Math.floor(Math.random() * 10000000000);
+//   const serialNumber = randomNumber.toString().padStart(5, '0');
+
+//   connection.query(
+//     `SELECT user_id FROM users WHERE user_id = ?`,
+//     [params.user_id],
+//     (userError, userResults) => {
+//       if (userError) {
+//         console.log(userError);
+//         callback({ message: "Error fetching user information" }, null);
+//         return;
+//       }
+//       if (userResults.length === 0) {
+//         callback({ message: "User not found" }, null);
+//         return;
+//       }
+//       const user_id = params.user_id;
+//       const status_id = 1;
+
+//       connection.query(
+//         `INSERT INTO orders (serial_number, user_id, order_at, total_price, status_id, created_at, created_by_id, txn_ref, amount, order_infor, status, vnp_ResponseCode, notification) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+//          INSERT INTO order_details (order_id, phone_number, service_id, note, unit_price, sub_total_price, address_order, area, work_date, start_time, full_name, housetype, service_name, estimated_time, vnp_ResponseCode, payment, status_payment, notification)
+//          VALUES (LAST_INSERT_ID(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
+//         [
+//           serialNumber,
+//           user_id,
+//           new Date(),
+//           params.total_price,
+//           status_id,
+//           new Date(),
+//           params.created_by_id,
+//           params.txn_ref,
+//           params.amount,
+//           params.order_infor,
+//           params.status,
+//           params.vnp_ResponseCode,
+//           params.notification,
+//           // Order details values
+//           params.phone_number,
+//           params.service_id,
+//           params.note,
+//           params.unit_price,
+//           params.sub_total_price,
+//           params.address_order,
+//           params.area,
+//           params.work_date.split('/').reverse().join('-'), // formatted work date
+//           params.start_time,
+//           params.full_name,
+//           params.housetype,
+//           params.service_name,
+//           params.estimated_time,
+//           params.vnp_ResponseCode,
+//           params.payment,
+//           params.status_payment,
+//           params.notification,
+//         ],
+//         (error, results) => {
+//           if (error) {
+//             console.log(error);
+//             callback({ message: "Error inserting order and order details" }, null);
+//             return;
+//           }
+//           callback(null, { message: "Successfully ordered!" });
+//         }
+//       );
+//     }
+//   );
+// }
+
+
 const addOrderDetails = (params, callback) => {
   connection.query('insert into order_details SET ?', params, (error, results) => {
     if (error) {
