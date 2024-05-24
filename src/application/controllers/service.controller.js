@@ -109,7 +109,9 @@ const deleteService = (req, res) => {
 
 const searchOrderDetailsServices = (req, res) => {
     const keyword = req.query.keyword;
-    Service.searchOrderDetailsServices({ keyword }, (err, result) => {
+    const employee_code = req.query.employee_code;
+    const params = { keyword, employee_code };
+    Service.searchOrderDetailsServices(params, (err, result) => {
         if (err) {
             res.status(500).send({
                 errMessage: err.message
@@ -119,7 +121,6 @@ const searchOrderDetailsServices = (req, res) => {
         }
     })
 };
-
 
 const updateOrderStatus = (req, res) => {
     const orderId = req.params.order_id;
