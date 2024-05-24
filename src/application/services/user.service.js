@@ -2,6 +2,7 @@ import {
   validateEmail,
   validateIdUserDetails,
   validatePassword,
+  validatePhoneNumber,
   validateRoleUser,
   validateUserName,
 } from "../../utils/validationUser.js";
@@ -20,22 +21,28 @@ const searchUsers = (params, callback) => {
 
 // Hàm thêm người dùng mới
 const addUser = (params, callback) => {
-  if (
-    !params.username &&
-    !params.password &&
-    !params.email &&
-    !params.first_name &&
-    !params.last_name
-  ) {
-    callback({ message: "Please complete all information" }, null);
+  if (!params.username) {
+    callback({ message: "Username is required!" }, null);
+  } else if (!params.password) {
+    callback({ message: "Password is required!" }, null);
+  } else if (!params.email) {
+    callback({ message: "Email is required!" }, null);
   } else if (!validateEmail(params.email)) {
-    callback({ message: "Invalid email!" }, null);
-  } else if (!validatePassword(params.password)) {
-    callback({ message: "Invalid password!" }, null);
-  } else if (!validateUserName(params.username)) {
-    callback({ message: "Invalid username!" }, null);
+    callback({ message: "Invalid email format!" }, null);
+  } else if (!params.first_name) {
+    callback({ message: "First name is required!" }, null);
+  } else if (!params.last_name) {
+    callback({ message: "Last name is required!" }, null);
+  } else if (!params.role) {
+    callback({ message: "Role is required!" }, null);
   } else if (!validateRoleUser(params.role)) {
     callback({ message: "Invalid role!" }, null);
+  } else if (!validatePassword(params.password)) {
+    callback({ message: "Password must be at least 6 characters long!" }, null);
+  } else if (!validateUserName(params.username)) {
+    callback({ message: "Invalid username!" }, null);
+  } else if (!validatePhoneNumber(params.phone_number)) {
+    callback({ message: "Invalid phone number format!" }, null);
   } else {
     userRepositories.addUser(params, (err, result) => {
       if (err) {

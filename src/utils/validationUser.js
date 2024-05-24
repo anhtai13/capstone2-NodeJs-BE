@@ -4,7 +4,7 @@ export const validateEmail = (email) => {
 }
 
 export const validatePhoneNumber = (phoneNumber) => {
-    return phoneNumber.length > 9 && phoneNumber.length < 13
+    return phoneNumber.length === 10
 }
 
 export const validatePassword = (password) => {
