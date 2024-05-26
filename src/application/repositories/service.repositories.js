@@ -172,6 +172,7 @@ const deleteService = (params, callback) => {
     (error, results, fields) => {
       if (error) {
         callback({ message: "Something wrong!" }, null);
+        console.log(error);
       } else if (results.length == 0) {
         callback({ message: "Product not found!" }, null);
       } else {
@@ -181,6 +182,7 @@ const deleteService = (params, callback) => {
           (err, results) => {
             if (err) {
               callback({ message: "Something wrong!" }, null);
+              console.log(error);
             } else {
               callback(null, results);
             }

@@ -5,7 +5,7 @@ const connection = getConnection();
 
 const getListOrder = (params, callback) => {
   connection.query(
-    `SELECT *, FORMAT(order_details.unit_price, 0) AS unit_price, FORMAT(order_details.sub_total_price, 0) AS sub_total_price
+    `SELECT *, FORMAT(order_details.unit_price, 0) AS unit_price
      FROM orders
      INNER JOIN order_details ON orders.order_id = order_details.order_id`,
     (error, results) => {
@@ -20,7 +20,7 @@ const getListOrder = (params, callback) => {
 
 const getListOrderByEmployeeCode = (employeeCode, callback) => {
   connection.query(
-    `SELECT orders.*, order_details.*,FORMAT(order_details.sub_total_price, 0) AS sub_total_price,FORMAT(order_details.unit_price, 0) AS unit_price
+    `SELECT orders.*, order_details.*,FORMAT(order_details.unit_price, 0) AS unit_price
      FROM orders
      INNER JOIN order_details ON orders.order_id = order_details.order_id
      INNER JOIN users ON order_details.employee_code = users.employee_code
@@ -157,10 +157,9 @@ const addOrder = (params, callback) => {
               return;
             }
             const orderDetailId = detailResults.insertId; // Lấy ID của chi tiết đơn hàng
-
             // Tiếp tục chèn dữ liệu vào bảng employee_debt với orderDetailId
             connection.query(
-              `INSERT INTO emoloyee_debt (order_detail_id) VALUES (?)`,
+              `INSERT INTO employee_debt (order_detail_id) VALUES (?)`,
               [orderDetailId], // Sử dụng orderDetailId và sub_total_price hoặc giá trị phù hợp khác
               (debtError, debtResults) => {
                 if (debtError) {

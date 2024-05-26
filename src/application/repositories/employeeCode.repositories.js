@@ -26,14 +26,14 @@ const getListDebtHistory = (params, callback) => {
 // lấy danh sách các nhân viên có tổng tiền nợ
 const getListEmployeeReceipt = (params, callback) => {
   connection.query(
-    `SELECT u.*,BANG_A.emoloyee_debt_id,BANG_A.order_detail_id, 
+    `SELECT u.*,BANG_A.employee_debt_id,BANG_A.order_detail_id, 
     FORMAT(COALESCE(BANG_A.sum_no, 0), 'C', 'vi-VN') AS sum_no, 
     FORMAT(COALESCE(BANG_B.sum_nhan, 0), 'C', 'vi-VN') AS sum_nhan, 
     FORMAT((COALESCE(BANG_A.sum_no, 0) - COALESCE(BANG_B.sum_nhan, 0)), 'C', 'vi-VN') as balance
 FROM users u
 LEFT JOIN
- (SELECT od.employee_code,ed.emoloyee_debt_id,ed.order_detail_id, SUM(od.unit_price) AS sum_no
- FROM emoloyee_debt ed
+ (SELECT od.employee_code,ed.employee_debt_id,ed.order_detail_id, SUM(od.unit_price) AS sum_no
+ FROM employee_debt ed
  JOIN order_details od ON ed.order_detail_id = od.order_detail_id
  WHERE od.vnp_ResponseCode IS NULL
  GROUP BY od.employee_code) AS BANG_A
@@ -59,14 +59,14 @@ WHERE u.role = 3;
 // lấy danh sách các nhân viên có tổng tiền nợ
 const getListEmployeeReceiptId = (params, callback) => {
   connection.query(
-    `SELECT u.*,BANG_A.emoloyee_debt_id,BANG_A.order_detail_id, 
+    `SELECT u.*,BANG_A.employee_debt_id,BANG_A.order_detail_id, 
     FORMAT(COALESCE(BANG_A.sum_no, 0), 'C', 'vi-VN') AS sum_no, 
     FORMAT(COALESCE(BANG_B.sum_nhan, 0), 'C', 'vi-VN') AS sum_nhan, 
     FORMAT((COALESCE(BANG_A.sum_no, 0) - COALESCE(BANG_B.sum_nhan, 0)), 'C', 'vi-VN') as balance
   FROM users u
   LEFT JOIN
-  (SELECT od.employee_code,ed.emoloyee_debt_id,ed.order_detail_id, SUM(od.unit_price) AS sum_no
-  FROM emoloyee_debt ed
+  (SELECT od.employee_code,ed.employee_debt_id,ed.order_detail_id, SUM(od.unit_price) AS sum_no
+  FROM employee_debt ed
   JOIN order_details od ON ed.order_detail_id = od.order_detail_id
   WHERE od.vnp_ResponseCode IS NULL
   GROUP BY od.employee_code) AS BANG_A
