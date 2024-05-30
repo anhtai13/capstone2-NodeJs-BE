@@ -35,18 +35,37 @@ const login1 = (params, callback) => {
 };
 
 const forgotPasswordApp = (email, otp, callback) => {
-  authRepositories.forgotPasswordApp(email, otp, (err, result) => {
-    if (err) {
-      callback(err, null);
-    } else {
-      sendOTPByEmail(email, otp);
-      const response = {
-        message: "OTP sent successfully",
-        OTP: otp
-      };
-      callback(null, response);
+  connection.query(
+    "SELECT * FROM users WHERE email = ?",
+    [email],
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        callback({ message: "Something went wrong!" }, null);
+      } else {
+        if (results.length === 0) {
+          callback({ message: "Email not found" }, null);
+        } else {
+          connection.query(
+            "UPDATE users SET otp = ? WHERE email = ?",
+            [otp, email],
+            (error, updateResults) => {
+              if (error) {
+                console.log(error);
+                callback({ message: "Something went wrong!" }, null);
+              } else {
+                const response = {
+                  message: "OTP sent successfully",
+                  OTP: otp
+                };
+                callback(null, response);
+              }
+            }
+          );
+        }
+      }
     }
-  });
+  );
 };
 
 const verifyOTP = (email, otp, callback) => {
@@ -100,8 +119,6 @@ const changePasswordApp = (email, newPassword, callback) => {
     }
   );
 };
-
-
 
 const resendOTP = (email, otp, callback) => {
   authRepositories.saveResendOTP(email, otp, (err, result) => {

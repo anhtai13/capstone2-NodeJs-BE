@@ -214,12 +214,12 @@ const getDetailOrder = (params, callback) => {
 
 const getDetailOrderByUserId = (params, callback) => {
   connection.query(
-    `SELECT od.*,o.*,s.*,u.* 
-    FROM order_details
-    AS od JOIN orders
-    AS o ON od.order_id = o.order_id JOIN services 
-    AS s ON od.service_id = s.service_id JOIN users 
-    AS u ON o.user_id = u.user_id`,
+    `SELECT od.*, o.*, s.*, u.* 
+    FROM order_details AS od 
+    JOIN orders AS o ON od.order_id = o.order_id 
+    JOIN services AS s ON od.service_id = s.service_id 
+    JOIN users AS u ON o.user_id = u.user_id
+    WHERE o.user_id = ?`, // Thêm điều kiện WHERE để lọc theo user_id
     [+params.user_id],
     (error, results, fields) => {
       if (error) {
@@ -231,7 +231,7 @@ const getDetailOrderByUserId = (params, callback) => {
       }
     }
   );
-};
+}
 
 const updateOrder = (params, callback) => {
   const currentDate = new Date();
@@ -287,21 +287,33 @@ const deleteOrder = (params, callback) => {
         callback({ message: "Order not found!" }, null);
       } else {
         connection.query(
-          `DELETE FROM order_details WHERE order_id=?`,
+          `DELETE FROM employee_debt WHERE order_detail_id IN (SELECT order_detail_id FROM order_details WHERE order_id=?)`,
           [params.id],
           (err, results) => {
             if (err) {
-              callback({ message: "Something wrong!" }, null);
+              console.log(err);
+              callback({ message: "Something wrong!!!" }, null);
             } else {
               connection.query(
-                `DELETE FROM orders WHERE order_id=?`,
+                `DELETE FROM order_details WHERE order_id=?`,
                 [params.id],
                 (err, results) => {
                   if (err) {
                     console.log(err);
                     callback({ message: "Something wrong!" }, null);
                   } else {
-                    callback(null, { message: "Delete successful!" });
+                    connection.query(
+                      `DELETE FROM orders WHERE order_id=?`,
+                      [params.id],
+                      (err, results) => {
+                        if (err) {
+                          console.log(err);
+                          callback({ message: "Something wrong!" }, null);
+                        } else {
+                          callback(null, { message: "Delete successful!" });
+                        }
+                      }
+                    );
                   }
                 }
               );

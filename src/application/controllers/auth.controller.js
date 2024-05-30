@@ -77,7 +77,6 @@ const changePasswordForgotApp = (req, res) => {
           errMessage: err.message,
         });
       }
-
       res.status(200).send({
         message: "Password changed successfully",
       });

@@ -29,10 +29,6 @@ const addUser = (params, callback) => {
     callback({ message: "Email is required!" }, null);
   } else if (!validateEmail(params.email)) {
     callback({ message: "Invalid email format!" }, null);
-  } else if (!params.first_name) {
-    callback({ message: "First name is required!" }, null);
-  } else if (!params.last_name) {
-    callback({ message: "Last name is required!" }, null);
   } else if (!params.role) {
     callback({ message: "Role is required!" }, null);
   } else if (!validateRoleUser(params.role)) {
@@ -71,15 +67,15 @@ const getDetailUser = (params, callback) => {
 
 // Hàm cập nhật thông tin người dùng
 const updateUser = (params, callback) => {
-  
-    userRepositories.updateUser(params, (err, result) => {
-      if (err) {
-        callback(err, null);
-      } else {
-        callback(null, result);
-      }
-    });
-  }
+
+  userRepositories.updateUser(params, (err, result) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, result);
+    }
+  });
+}
 
 // Hàm xóa người dùng
 const deleteUser = (params, callback) => {
@@ -90,8 +86,8 @@ const deleteUser = (params, callback) => {
       if (err) {
         callback(err, null);
       } else {
-        callback(null, result,{ message: "Delete User success" });
-        
+        callback(null, result, { message: "Delete User success" });
+
       }
     });
   }

@@ -267,6 +267,7 @@ const saveResendOTP = (email, otp, callback) => {
         console.log(error);
         callback({ message: "Something went wrong!" }, null);
       } else {
+        console.log("OTP saved successfully");
         callback(null, "OTP saved successfully");
       }
     }
