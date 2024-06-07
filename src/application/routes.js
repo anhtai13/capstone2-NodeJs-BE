@@ -10,6 +10,8 @@ import changepasswordController from "./controllers/changepassword.controller.js
 import forgotpasswordController from './controllers/forgotpassword.controller.js';
 import resetpasswordController from "./controllers/resetpassword.controller.js";
 import employeeCodeController from "./controllers/employeeCode.controller.js";
+import feedbackController from "./controllers/feedback.controller.js";
+
 const router = Router();
 
 //Authentication
@@ -106,6 +108,14 @@ router.get("/contact/:id", contactController.getDetailContact);
 router.post("/contact", contactController.addContact);
 router.put("/contact", contactController.updateContact);
 router.delete("/contact/:id", contactController.deleteContact);
+
+//feedback
+router.post("/feedback", feedbackController.addFeedback);
+router.get("/feedback/search", feedbackController.searchFeedbacks);
+router.get("/feedback/:id", feedbackController.getFeedbackDetail);
+router.put("/feedback/:id", feedbackController.updateFeedback);
+router.delete("/feedback/:id", feedbackController.deleteFeedback);
+router.get("/feedbacks/all", feedbackController.getAllFeedbacks);
 
 // upload file
 router.post(
